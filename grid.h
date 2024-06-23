@@ -34,5 +34,6 @@ void Maze_FreeGrid(MazeGrid* grid);
 
 int Maze_GetPosition(MazeGrid* grid, int position, enum Direction direction);
 
+int Maze_RemoveWall(MazeGrid* grid, int position, enum Direction direction);
 
 #endif
