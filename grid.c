@@ -66,7 +66,7 @@ int Maze_GetPosition(MazeGrid* grid, int position, enum Direction direction) {
 
 int Maze_RemoveWall(MazeGrid* grid, int position, enum Direction direction) {
 	if (position < 0 || position > grid->width * grid->height) {
-		return -1;
+		return 0;
 	}
 
 	int neighborPosition = Maze_GetPosition(grid, position, direction);
@@ -107,14 +107,14 @@ int Maze_RemoveWall(MazeGrid* grid, int position, enum Direction direction) {
 			break;
 	}
 	
-	return 0;
+	return 1;
 }
 
 int Maze_HasNeighbor(MazeGrid* grid, int position, enum Direction direction) {
 	if (Maze_GetPosition(grid, position, direction) != -1) {
-		return 0;
+		return 1;
 	} else {
-		return -1;
+		return 0;
 	}
 }
 

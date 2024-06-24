@@ -6,5 +6,8 @@
 #include "grid.h" 
 
 void Maze_BinaryTree(MazeGrid* grid);
+void Maze_BinaryTree_Process(MazeGrid* grid, int step);
+
+void Maze_Sidewinder(MazeGrid* grid);
 
 #endif 

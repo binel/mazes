@@ -8,19 +8,29 @@
 int main() {
 	srand(time(NULL));
 	
-	int gridWidth = 10;
-	int gridHeight = 10;
+	int gridWidth = 50;
+	int gridHeight = 50;
 	
 	MazeGrid grid;
 	Maze_InitGrid(&grid, gridWidth, gridHeight);
 	
-	Maze_BinaryTree(&grid);
-	
+	//Maze_BinaryTree(&grid);
+	//Maze_Sidewinder(&grid);
 
 	InitWindow(520, 520, "mazes");
-	SetTargetFPS(60);
-	
+	SetTargetFPS(30);
+	int step = 0; 
 	while(!WindowShouldClose()) {
+		if (step < gridWidth * gridHeight) {
+			Maze_BinaryTree_Process(&grid, step);
+			step++;
+		}
+		if (step == gridWidth * gridHeight) {
+			gridWidth = (rand() % 18) + 2;
+			gridHeight = gridWidth;
+			Maze_InitGrid(&grid, gridWidth, gridHeight);
+			step = 0;
+		}
 		BeginDrawing();
 		ClearBackground(BLACK);
 

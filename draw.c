@@ -3,7 +3,7 @@
 void Maze_DrawGrid(MazeGrid* grid, int xstart, int ystart, int width, int height) {
 	
 	// todo make this dynamic later
-	int cell_size = 50;
+	int cell_size = (int)((double)width / (double)grid->width);
 	
 	int x = xstart; 
 	int y = ystart;
