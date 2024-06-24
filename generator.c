@@ -32,28 +32,31 @@ void Maze_BinaryTree_Process(MazeGrid* grid, int step) {
 
 // todo doesn't work correctly yet 
 void Maze_Sidewinder(MazeGrid* grid) {
-	int position = 0;
-	int runLength = 0; 
+	SidewinderState state;
+	state.position = 0;
+	state.runLength = 0; 
 	
 	for (int column = 0; column < grid->width; column++) {
 		for (int row = 0; row < grid->height; row++) {
-			int hasDown = Maze_HasNeighbor(grid, position, DOWN);
-			int hasRight = Maze_HasNeighbor(grid, position, RIGHT);
-			
-			// should end run 
-			if (!hasRight || rand() % 2 == 0) {
-				if (hasDown) {
-					int openDownPos = position - (rand() % runLength);
-					Maze_RemoveWall(grid, openDownPos, DOWN);
-				}
-				
-				runLength = 0;
-			}	
-			else {
-				runLength++;
-				Maze_RemoveWall(grid, position, RIGHT);
-			}
-			position++;
+			Maze_Sidewinder_Process(grid, &state);
+			state.position++;
 		}
 	}
+}
+
+void Maze_Sidewinder_Process(MazeGrid* grid, SidewinderState* state) {
+	int hasDown = Maze_HasNeighbor(grid, state->position, DOWN);
+	int hasRight = Maze_HasNeighbor(grid, state->position, RIGHT);
+	state->runLength++;
+	// should end run 
+	if (!hasRight || (hasDown && rand() % 2 == 0)) {
+		int openDownPos = state->position - (rand() % state->runLength);
+		Maze_RemoveWall(grid, openDownPos, DOWN);
+		
+		state->runLength = 0;
+	}	
+	else {
+		//state->runLength++;
+		Maze_RemoveWall(grid, state->position, RIGHT);
+	}	
 }
