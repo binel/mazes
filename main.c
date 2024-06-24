@@ -1,8 +1,12 @@
+#include <stdlib.h>
+#include <time.h>
 #include <raylib.h>
 #include "grid.h"
 #include "draw.h" 
+#include "generator.h"
 
 int main() {
+	srand(time(NULL));
 	
 	int gridWidth = 10;
 	int gridHeight = 10;
@@ -10,12 +14,8 @@ int main() {
 	MazeGrid grid;
 	Maze_InitGrid(&grid, gridWidth, gridHeight);
 	
-	Maze_RemoveWall(&grid, 11, DOWN);
-	Maze_RemoveWall(&grid, 11, UP);
-	Maze_RemoveWall(&grid, 11, LEFT);
-	Maze_RemoveWall(&grid, 11, RIGHT);
+	Maze_BinaryTree(&grid);
 	
-	Maze_RemoveWall(&grid, 0, UP);
 
 	InitWindow(520, 520, "mazes");
 	SetTargetFPS(60);
