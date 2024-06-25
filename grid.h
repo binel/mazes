@@ -26,6 +26,7 @@ typedef struct {
 	int width;
 	int height; 
 	MazeCell* cells;
+	int playerPosition;
 } MazeGrid;
 
 void Maze_InitCell(MazeCell* cell);
@@ -34,6 +35,8 @@ void Maze_FreeGrid(MazeGrid* grid);
 
 int Maze_GetPosition(MazeGrid* grid, int position, enum Direction direction);
 int Maze_HasNeighbor(MazeGrid* grid, int position, enum Direction direction);
+
+int Maze_MovePlayerInDirection(MazeGrid* grid, enum Direction direction);
 
 int Maze_RemoveWall(MazeGrid* grid, int position, enum Direction direction);
 

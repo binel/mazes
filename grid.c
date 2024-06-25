@@ -12,6 +12,7 @@ void Maze_InitGrid(MazeGrid* grid, int width, int height) {
 	grid->cells = malloc(width * height * sizeof(MazeCell));
 	grid->width = width;
 	grid->height = height;
+	grid->playerPosition = 0;
 	int i = 0;
 	for (int row = 0; row < height; row++) {
 		for (int column = 0; column < width; column++) {
@@ -116,6 +117,35 @@ int Maze_HasNeighbor(MazeGrid* grid, int position, enum Direction direction) {
 	} else {
 		return 0;
 	}
+}
+
+static int IsBlocked(MazeGrid* grid, int position, enum Direction direction) {
+	switch (direction) {
+		case UP:
+			return grid->cells[position].top == CLOSED;
+		case DOWN:
+			return grid->cells[position].bottom == CLOSED;
+		case LEFT: 
+			return grid->cells[position].left == CLOSED;
+		case RIGHT: 
+			return grid->cells[position].right == CLOSED;
+	}
+	return 0;
+}
+
+int Maze_MovePlayerInDirection(MazeGrid* grid, enum Direction direction) {
+	int moveToPosition = Maze_GetPosition(grid, grid->playerPosition, direction);
+	
+	if (moveToPosition == -1) {
+		return 0;
+	}
+	
+	if (IsBlocked(grid, grid->playerPosition, direction)) {
+		return 0;
+	}
+	
+	grid->playerPosition = moveToPosition;
+	return 1;
 }
 
 void Maze_FreeGrid(MazeGrid* grid) {

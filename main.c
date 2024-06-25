@@ -13,29 +13,28 @@ int main() {
 	
 	MazeGrid grid;
 	Maze_InitGrid(&grid, gridWidth, gridHeight);
-	
-	//Maze_BinaryTree(&grid);
-	//Maze_Sidewinder(&grid);
 
 	InitWindow(520, 520, "mazes");
-	SetTargetFPS(15);
-	int step = 0; 
-	SidewinderState state;
-	state.position = 0;
-	state.runLength = 0;
+	SetTargetFPS(30);
+	Maze_Sidewinder(&grid);
+	
 	while(!WindowShouldClose()) {
-		if (step < gridWidth * gridHeight) {
-			Maze_Sidewinder_Process(&grid, &state);
-			step++;
-			state.position = step;
+	
+		if (IsKeyPressed(KEY_UP)) {
+			Maze_MovePlayerInDirection(&grid, UP);
 		}
-		if (step == gridWidth * gridHeight) {
-			gridWidth = (rand() % 18) + 2;
-			gridHeight = gridWidth;
-			Maze_InitGrid(&grid, gridWidth, gridHeight);
-			step = 0;
-			state.position=step;
+		
+		if (IsKeyPressed(KEY_DOWN)) {
+			Maze_MovePlayerInDirection(&grid, DOWN);
 		}
+		
+		if (IsKeyPressed(KEY_RIGHT)) {
+			Maze_MovePlayerInDirection(&grid, RIGHT);
+		}
+		
+		if (IsKeyPressed(KEY_LEFT)) {
+			Maze_MovePlayerInDirection(&grid, LEFT);
+		}	
 		
 		BeginDrawing();
 		ClearBackground(BLACK);

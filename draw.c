@@ -1,10 +1,8 @@
 #include "draw.h"
 
 void Maze_DrawGrid(MazeGrid* grid, int xstart, int ystart, int width, int height) {
-	
-	// todo make this dynamic later
 	int cell_size = (int)((double)width / (double)grid->width);
-	
+	int half_cell_size = (int)((double)cell_size / 2.0);
 	int x = xstart; 
 	int y = ystart;
 	int position = 0;
@@ -21,6 +19,10 @@ void Maze_DrawGrid(MazeGrid* grid, int xstart, int ystart, int width, int height
 			}
 			if (grid->cells[position].left == CLOSED) {
 				DrawLine(x, y, x, y + cell_size, WHITE);
+			}
+			
+			if (grid->playerPosition == position) {
+				DrawCircle(x + half_cell_size, y + half_cell_size, half_cell_size, RED);
 			}
 			x += cell_size;
 			position++;

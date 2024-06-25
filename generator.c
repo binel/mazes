@@ -30,7 +30,6 @@ void Maze_BinaryTree_Process(MazeGrid* grid, int step) {
 	}
 }
 
-// todo doesn't work correctly yet 
 void Maze_Sidewinder(MazeGrid* grid) {
 	SidewinderState state;
 	state.position = 0;
@@ -56,7 +55,6 @@ void Maze_Sidewinder_Process(MazeGrid* grid, SidewinderState* state) {
 		state->runLength = 0;
 	}	
 	else {
-		//state->runLength++;
 		Maze_RemoveWall(grid, state->position, RIGHT);
 	}	
 }
