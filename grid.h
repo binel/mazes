@@ -40,4 +40,6 @@ int Maze_MovePlayerInDirection(MazeGrid* grid, enum Direction direction);
 
 int Maze_RemoveWall(MazeGrid* grid, int position, enum Direction direction);
 
+int Maze_IsPositionVisited(MazeGrid* grid, int position);
+
 #endif

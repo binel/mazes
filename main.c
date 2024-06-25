@@ -16,7 +16,10 @@ int main() {
 
 	InitWindow(520, 520, "mazes");
 	SetTargetFPS(30);
-	Maze_Sidewinder(&grid);
+	RandomWalkState state;
+	state.position = rand() % (gridWidth * gridHeight);
+	state.unvisited = (gridWidth * gridHeight) - 1;
+
 	
 	while(!WindowShouldClose()) {
 	
@@ -35,6 +38,10 @@ int main() {
 		if (IsKeyPressed(KEY_LEFT)) {
 			Maze_MovePlayerInDirection(&grid, LEFT);
 		}	
+		
+		if (state.unvisited > 0) {
+			Maze_RandomWalk_Process(&grid, &state);
+		}
 		
 		BeginDrawing();
 		ClearBackground(BLACK);
