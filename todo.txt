@@ -1,5 +1,5 @@
 Bugs
-- Fix issue where sidewinder mazes have an open space at the bottom 
+- zaro boogs 
 
 Features 
 - Implement a menu to choose between play modes 
@@ -8,3 +8,6 @@ Features
 
 Tech Debt
 - Linting? 
+- Docs 
+- Split out player logic from grid logic 
+- Add readme 

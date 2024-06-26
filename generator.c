@@ -32,14 +32,10 @@ void Maze_BinaryTree_Process(MazeGrid* grid, int step) {
 
 void Maze_Sidewinder(MazeGrid* grid) {
 	SidewinderState state;
-	state.position = 0;
-	state.runLength = 0; 
+	Maze_Sidewinder_InitState(&state);
 	
-	for (int column = 0; column < grid->width; column++) {
-		for (int row = 0; row < grid->height; row++) {
-			Maze_Sidewinder_Process(grid, &state);
-			state.position++;
-		}
+	while (state.position < (grid->width * grid->height) - 1) {
+		Maze_Sidewinder_Process(grid, &state);
 	}
 }
 
@@ -56,13 +52,19 @@ void Maze_Sidewinder_Process(MazeGrid* grid, SidewinderState* state) {
 	}	
 	else {
 		Maze_RemoveWall(grid, state->position, RIGHT);
-	}	
+	}
+	state->position++;
+}
+
+void Maze_Sidewinder_InitState(SidewinderState* state) {
+	state->position = 0;
+	state->runLength = 0; 	
 }
 
 void Maze_RandomWalk(MazeGrid* grid) {
 	RandomWalkState state;
-	state.position = rand() % (grid->width * grid->height);
-	state.unvisited = (grid->width * grid->height) - 1;
+	Maze_RandomWalk_InitState(&state, grid);
+	
 	while(state.unvisited > 0) {
 		Maze_RandomWalk_Process(grid, &state);
 	}
@@ -110,4 +112,9 @@ void Maze_RandomWalk_Process(MazeGrid* grid, RandomWalkState* state) {
 	}
 
 	state->position = newPosition;
+}
+
+void Maze_RandomWalk_InitState(RandomWalkState* state, MazeGrid* grid) {
+	state->position = rand() % (grid->width * grid->height);
+	state->unvisited = (grid->width * grid->height) - 1;
 }

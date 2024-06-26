@@ -16,10 +16,6 @@ int main() {
 
 	InitWindow(520, 520, "mazes");
 	SetTargetFPS(30);
-	RandomWalkState state;
-	state.position = rand() % (gridWidth * gridHeight);
-	state.unvisited = (gridWidth * gridHeight) - 1;
-
 	
 	while(!WindowShouldClose()) {
 	
@@ -38,9 +34,21 @@ int main() {
 		if (IsKeyPressed(KEY_LEFT)) {
 			Maze_MovePlayerInDirection(&grid, LEFT);
 		}	
+
+		if (IsKeyPressed(KEY_SPACE)) {
+			Maze_InitGrid(&grid, gridWidth, gridHeight);
+		}
+
+		if (IsKeyPressed(KEY_B)) {
+			Maze_BinaryTree(&grid);
+		}
 		
-		if (state.unvisited > 0) {
-			Maze_RandomWalk_Process(&grid, &state);
+		if (IsKeyPressed(KEY_S)) {
+			Maze_Sidewinder(&grid);
+		}
+		
+		if (IsKeyPressed(KEY_R)) {
+			Maze_RandomWalk(&grid);
 		}
 		
 		BeginDrawing();
