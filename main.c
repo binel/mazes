@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <raylib.h>
+#include <stdbool.h>
+
 #include "grid.h"
 #include "draw.h" 
 #include "generator.h"
@@ -16,6 +18,12 @@ int main() {
 
 	InitWindow(520, 520, "mazes");
 	SetTargetFPS(30);
+	
+	bool creatingGrid = false;
+	BinaryTreeState binaryTreeState;
+	SidewinderState sidewinderState;
+	RandomWalkState randomWalkState;
+	enum MazeType maze;
 	
 	while(!WindowShouldClose()) {
 	
@@ -39,17 +47,56 @@ int main() {
 			Maze_InitGrid(&grid, gridWidth, gridHeight);
 		}
 
-		if (IsKeyPressed(KEY_B)) {
+		if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_B)) {
+			creatingGrid = true;
+			maze = BINARY_TREE;
+			Maze_InitGrid(&grid, gridWidth, gridHeight);
+			Maze_BinaryTree_InitState(&grid, &binaryTreeState);
+		} else if (IsKeyPressed(KEY_B)) {
 			Maze_BinaryTree(&grid);
 		}
 		
-		if (IsKeyPressed(KEY_S)) {
+		if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_S)) {
+			creatingGrid = true;
+			maze = SIDEWINDER;
+			Maze_InitGrid(&grid, gridWidth, gridHeight);
+			Maze_Sidewinder_InitState(&grid, &sidewinderState);
+		} else if (IsKeyPressed(KEY_S)) {
 			Maze_Sidewinder(&grid);
 		}
 		
-		if (IsKeyPressed(KEY_R)) {
+		if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_R)) {
+			creatingGrid = true;
+			maze = RANDOM_WALK;
+			Maze_InitGrid(&grid, gridWidth, gridHeight);
+			Maze_RandomWalk_InitState(&grid, &randomWalkState);
+		} else if (IsKeyPressed(KEY_R)) {
 			Maze_RandomWalk(&grid);
 		}
+		
+		if (creatingGrid) {
+			switch (maze) {
+				case BINARY_TREE:
+					Maze_BinaryTree_Process(&grid, &binaryTreeState);
+					if (binaryTreeState.finished) {
+						creatingGrid = false;
+					}
+					break;
+				case SIDEWINDER: 
+					Maze_Sidewinder_Process(&grid, &sidewinderState);
+					if (sidewinderState.finished) {
+						creatingGrid = false;
+					}
+				case RANDOM_WALK:
+					Maze_RandomWalk_Process(&grid, &randomWalkState);
+					if (randomWalkState.finished) {
+						creatingGrid = false;
+					}
+				default:
+					break;
+			}
+		}
+
 		
 		BeginDrawing();
 		ClearBackground(BLACK);
