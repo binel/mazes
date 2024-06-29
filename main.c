@@ -27,19 +27,31 @@ int main() {
 	
 	while(!WindowShouldClose()) {
 	
-		if (IsKeyPressed(KEY_UP)) {
+		if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_UP)) {
+			gridHeight++;
+			Maze_InitGrid(&grid, gridWidth, gridHeight);
+		} else if (IsKeyPressed(KEY_UP)) {
 			Maze_MovePlayerInDirection(&grid, UP);
 		}
 		
-		if (IsKeyPressed(KEY_DOWN)) {
+		if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_DOWN)) {
+			gridHeight--;
+			Maze_InitGrid(&grid, gridWidth, gridHeight);
+		} else if (IsKeyPressed(KEY_DOWN)) {
 			Maze_MovePlayerInDirection(&grid, DOWN);
 		}
 		
-		if (IsKeyPressed(KEY_RIGHT)) {
+		if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_RIGHT)) {
+			gridWidth++;
+			Maze_InitGrid(&grid, gridWidth, gridHeight);
+		} else if (IsKeyPressed(KEY_RIGHT)) {
 			Maze_MovePlayerInDirection(&grid, RIGHT);
 		}
 		
-		if (IsKeyPressed(KEY_LEFT)) {
+		if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_LEFT)) {
+			gridWidth--;
+			Maze_InitGrid(&grid, gridWidth, gridHeight);
+		} else if (IsKeyPressed(KEY_LEFT)) {
 			Maze_MovePlayerInDirection(&grid, LEFT);
 		}	
 
