@@ -1,7 +1,8 @@
 #include "draw.h"
 
 void Maze_DrawGrid(MazeGrid* grid, int xstart, int ystart, int width, int height) {
-	int cell_size = (int)((double)width / (double)grid->width);
+	int cell_determinant = grid->width < grid->height ? grid->height : grid->width;
+	int cell_size = (int)((double)width / (double)cell_determinant);
 	int half_cell_size = (int)((double)cell_size / 2.0);
 	int x = xstart; 
 	int y = ystart;

@@ -16,7 +16,12 @@ int main() {
 	MazeGrid grid;
 	Maze_InitGrid(&grid, gridWidth, gridHeight);
 
-	InitWindow(520, 520, "mazes");
+	int padding = 10;
+	int windowHeight = 500;
+	int windowWidth = 500;
+
+	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+	InitWindow(windowWidth + (padding * 2), windowHeight + (padding * 2), "mazes");
 	SetTargetFPS(30);
 	
 	bool creatingGrid = false;
@@ -26,6 +31,11 @@ int main() {
 	enum MazeType maze;
 	
 	while(!WindowShouldClose()) {
+	
+		if (IsWindowResized()) {
+			windowHeight = GetScreenHeight();
+			windowWidth = GetScreenWidth();
+		}
 	
 		if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_UP)) {
 			gridHeight++;
@@ -119,7 +129,7 @@ int main() {
 		BeginDrawing();
 		ClearBackground(BLACK);
 
-		Maze_DrawGrid(&grid, 10, 10, 500, 500);
+		Maze_DrawGrid(&grid, padding, padding, windowWidth, windowHeight);
 		
 		EndDrawing();
 	}
