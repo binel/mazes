@@ -115,7 +115,7 @@ void Maze_RandomWalk_Process(MazeGrid* grid, RandomWalkState* state) {
 		return;
 	}
 	
-	if (Maze_IsPositionVisited(grid, newPosition)) {
+	if (!grid->cells[newPosition].visited) {
 		switch (direction) {
 			case 0:
 				Maze_RemoveWall(grid, state->position, UP);
@@ -131,6 +131,7 @@ void Maze_RandomWalk_Process(MazeGrid* grid, RandomWalkState* state) {
 				break;
 		}	
 		state->unvisited -= 1;
+		grid->cells[newPosition].visited = true;
 	}
 
 	state->position = newPosition;
