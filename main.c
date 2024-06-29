@@ -88,6 +88,10 @@ int main() {
 			Maze_RandomWalk(&grid);
 		}
 		
+		if (IsKeyPressed(KEY_P)) {
+			grid.playerEnabled = !grid.playerEnabled;
+		}
+		
 		if (creatingGrid) {
 			switch (maze) {
 				case BINARY_TREE:

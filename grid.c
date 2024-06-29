@@ -14,6 +14,7 @@ void Maze_InitGrid(MazeGrid* grid, int width, int height) {
 	grid->width = width;
 	grid->height = height;
 	grid->playerPosition = 0;
+	grid->playerEnabled = true;
 	int i = 0;
 	for (int row = 0; row < height; row++) {
 		for (int column = 0; column < width; column++) {
@@ -160,12 +161,6 @@ int Maze_MovePlayerInDirection(MazeGrid* grid, enum Direction direction) {
 }
 
 int Maze_IsPositionVisited(MazeGrid* grid, int position) {
-	/*
-	return grid->cells[position].top == CLOSED 
-		&& grid->cells[position].bottom == CLOSED 
-		&& grid->cells[position].left == CLOSED 
-		&& grid->cells[position].right == CLOSED;
-	*/
 	return grid->cells[position].visited;
 }
 

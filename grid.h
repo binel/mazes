@@ -31,6 +31,7 @@ typedef struct {
 	int height; 
 	MazeCell* cells;
 	int playerPosition;
+	bool playerEnabled; 
 } MazeGrid;
 
 void Maze_InitCell(MazeCell* cell);

@@ -21,7 +21,7 @@ void Maze_DrawGrid(MazeGrid* grid, int xstart, int ystart, int width, int height
 				DrawLine(x, y, x, y + cell_size, WHITE);
 			}
 			
-			if (grid->playerPosition == position) {
+			if (grid->playerEnabled && grid->playerPosition == position) {
 				DrawCircle(x + half_cell_size, y + half_cell_size, half_cell_size, RED);
 			}
 			x += cell_size;

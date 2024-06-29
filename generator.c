@@ -94,6 +94,13 @@ void Maze_RandomWalk_Process(MazeGrid* grid, RandomWalkState* state) {
 		return;
 	}
 
+	// unfortunately we have to check if the cell we are already in 
+	// was visited to handle the startup condition. There might be 
+	// a better way to do this 
+	if (!grid->cells[state->position].visited) {
+		grid->cells[state->position].visited = true;
+	}
+
 	int direction = rand() % 4;
 	int newPosition;
 	switch (direction) {
