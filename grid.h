@@ -18,6 +18,7 @@ typedef struct {
     enum WallType right;
     // Used by some algorithms to see if the cell has previously
     // been visited
+    // TODO split this out 
     bool visited;
 } MazeCell;
 
@@ -25,6 +26,7 @@ typedef struct {
     int width;
     int height;
     MazeCell *cells;
+    // TODO split out the player stuff
     int playerPosition;
     bool playerEnabled;
 } MazeGrid;

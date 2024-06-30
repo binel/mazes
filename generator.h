@@ -72,7 +72,7 @@ void Maze_BinaryTree(MazeGrid *grid);
 
 /*
  * Generates a binary tree maze step-by-step. Each call to this function will
- * complete one additional step of the maze-generation process. This is useful
+ * complete one additional step of the maze generation process. This is useful
  * for animating the maze generation process
  *
  * @param grid - the grid to etch the maze into.
@@ -88,12 +88,84 @@ void Maze_BinaryTree_Process(MazeGrid *grid, BinaryTreeState *state);
  */
 void Maze_BinaryTree_InitState(MazeGrid *grid, BinaryTreeState *state);
 
+/*
+ * Generates a maze using the sidewinder algorithm. This generates a maze in O(n) time. 
+ * This maze is similar to Binary Tree mazes, but only a single side of the maze have 
+ * completely open corridors - in this implementation the bottom. Here is an example: 
+ *
+ * +---+---+---+---+---+
+ * |       |       |   |
+ * +---+   +---+   +   +
+ * |   |   |   |   |   |
+ * +   +   +   +   +   +
+ * |                   |
+ * +---+---+   +---+---+
+ * |   |   |   |       |
+ * +   +   +   +   +---+
+ * |                   |
+ * +---+---+---+---+---+
+ *
+ * @param grid The maze grid to etch the maze into.
+ */ 
 void Maze_Sidewinder(MazeGrid *grid);
+
+/*
+ * Generates a sidewinder maze step-by-step. Each call to this function will 
+ * complete one additional step of the maze generation process. This is useful
+ * for animating the maze generation process. 
+ *
+ * @param grid - the grid to etch the maze into. 
+ * @param state - the current state of the maze generation process. 
+ */ 
 void Maze_Sidewinder_Process(MazeGrid *grid, SidewinderState *state);
+
+/*
+ * Initializes the SidewinderState so it is ready to be used to generate a maze.
+ *
+ * @param grid - the grid that will be used for generation. It is not modified.
+ * @param state - the state to initialize
+ */
 void Maze_Sidewinder_InitState(MazeGrid *grid, SidewinderState *state);
 
+/*
+ * Generates a maze using a random walk. This is also called the 
+ * Aldous-Broder algorithm. It's very inefficient, but I actually don't know what 
+ * the time complexity is. But on the plus side it generates fully random mazes. 
+ * Here is an example: 
+ *
+ * +---+---+---+---+---+
+ * |           |       |
+ * +   +---+   +---+   +
+ * |   |   |       |   |
+ * +---+   +   +---+   +
+ * |   |       |   |   |
+ * +   +---+   +   +   +
+ * |                   |
+ * +   +   +   +   +   +
+ * |   |   |   |   |   |
+ * +---+---+---+---+---+
+ *
+ *
+ * @param grid - the grid to etch the maze into. 
+ */
 void Maze_RandomWalk(MazeGrid *grid);
+
+/*
+ * Generates a random walk (Aldous-Broder) maze step-by-step. Each call to this 
+ * function will complete one additional step of the maze generation process. 
+ * This is useful for animating the maze generation process.
+ * 
+ * @param grid - the grid to etch the maze into
+ * @param state - the current state of the maze generation process.
+ */
 void Maze_RandomWalk_Process(MazeGrid *grid, RandomWalkState *state);
+
+/*
+ * Initializes the RandomWalkState so it is ready to be used to generate a maze. 
+ *
+ * @param grid - the grid that will be used for generation. It is not modified.
+ * @param state - the state to initialize
+ */ 
 void Maze_RandomWalk_InitState(MazeGrid *grid, RandomWalkState *state);
 
 #endif
