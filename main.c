@@ -25,6 +25,12 @@ int main() {
                "mazes");
     SetTargetFPS(30);
 
+	DrawOptions options;
+	options.xstart = padding;
+	options.ystart = padding;
+	options.height = windowHeight;
+	options.width = windowWidth;
+
     bool creatingGrid = false;
     BinaryTreeState binaryTreeState;
     SidewinderState sidewinderState;
@@ -36,6 +42,8 @@ int main() {
         if (IsWindowResized()) {
             windowHeight = GetScreenHeight();
             windowWidth = GetScreenWidth();
+            options.height = windowHeight;
+            options.width = windowWidth;
         }
 
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_UP)) {
@@ -129,7 +137,7 @@ int main() {
         BeginDrawing();
         ClearBackground(BLACK);
 
-        Maze_DrawGrid(&grid, padding, padding, windowWidth, windowHeight);
+        Maze_DrawGrid(&grid, &options);
 
         EndDrawing();
     }

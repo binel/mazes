@@ -1,15 +1,14 @@
 #include "draw.h"
 
-void Maze_DrawGrid(MazeGrid *grid, int xstart, int ystart, int width,
-                   int height) {
+void Maze_DrawGrid(MazeGrid *grid, DrawOptions *options) {
     // figure out how big the cells of the grid should be based on the
     // dimensions of the grid.
     int cell_determinant =
         grid->width < grid->height ? grid->height : grid->width;
-    int cell_size = (int)((double)width / (double)cell_determinant);
+    int cell_size = (int)((double)options->width / (double)cell_determinant);
     int half_cell_size = (int)((double)cell_size / 2.0);
-    int x = xstart;
-    int y = ystart;
+    int x = options->xstart;
+    int y = options->ystart;
     int position = 0;
     for (int row = 0; row < grid->height; row++) {
         for (int column = 0; column < grid->width; column++) {
@@ -33,7 +32,7 @@ void Maze_DrawGrid(MazeGrid *grid, int xstart, int ystart, int width,
             x += cell_size;
             position++;
         }
-        x = xstart;
+        x = options->xstart;
         y += cell_size;
     }
 }

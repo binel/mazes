@@ -13,17 +13,27 @@
 #include "grid.h"
 
 /*
+ * Configuration options for drawing the grid 
+ * 
+ */ 
+typedef struct {
+	// x offset padding in px 
+	int xstart; 
+	// y offset padding in px 
+	int ystart; 
+	// the width of the grid in px
+	int width;
+	// the height of the grid in px 
+	int height;
+} DrawOptions;
+
+
+/*
  * Draws a maze onto the screen
  *
- * @param grid the grid to be displayed
- * @param xstart the x offset or padding in px to start drawing the
- * 		  top left corner of the grid
- * @param ystart the y offset or padding in px to start drawing the
- *		  top right corner of the grid
- * @param width the width of the grid in px
- * @param height the height of the grid in px
+ * @param grid - the grid to be displayed
+ * @param drawOptions - configuration for how to draw the grid 
  */
-void Maze_DrawGrid(MazeGrid *grid, int xstart, int ystart, int width,
-                   int height);
+void Maze_DrawGrid(MazeGrid *grid, DrawOptions *options);
 
 #endif
