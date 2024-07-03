@@ -10,20 +10,40 @@ void Maze_DrawGrid(MazeGrid *grid, DrawOptions *options) {
     int x = options->xstart;
     int y = options->ystart;
     int position = 0;
+    Vector2 start;
+    Vector2 end;
     for (int row = 0; row < grid->height; row++) {
         for (int column = 0; column < grid->width; column++) {
             if (grid->cells[position].top == CLOSED) {
-                DrawLine(x, y, x + cell_size, y, WHITE);
+            	start.x = x;
+            	start.y = y;
+            	end.x = x + cell_size;
+            	end.y = y;
+            	DrawLineEx(start, end, options->wallWidth, WHITE);
             }
             if (grid->cells[position].bottom == CLOSED) {
-                DrawLine(x, y + cell_size, x + cell_size, y + cell_size, WHITE);
+            	start.x = x;
+            	start.y = y + cell_size;
+            	end.x = x + cell_size;
+            	end.y = y + cell_size;
+            	DrawLineEx(start, end, options->wallWidth, WHITE);
             }
             if (grid->cells[position].right == CLOSED) {
-                DrawLine(x + cell_size, y, x + cell_size, y + cell_size, WHITE);
+            	start.x = x + cell_size;
+            	start.y = y;
+            	end.x = x + cell_size;
+            	end.y = y + cell_size;
+                DrawLineEx(start, end, options->wallWidth, WHITE);
             }
             if (grid->cells[position].left == CLOSED) {
-                DrawLine(x, y, x, y + cell_size, WHITE);
+            	start.x = x;
+            	start.y = y;
+            	end.x = x;
+            	end.y = y + cell_size;
+                DrawLineEx(start, end, options->wallWidth, WHITE);
             }
+            
+
 
             if (grid->playerEnabled && grid->playerPosition == position) {
                 DrawCircle(x + half_cell_size, y + half_cell_size,

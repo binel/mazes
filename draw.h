@@ -25,6 +25,8 @@ typedef struct {
 	int width;
 	// the height of the grid in px 
 	int height;
+	// the width of the walls of the cell 
+	int wallWidth;
 } DrawOptions;
 
 

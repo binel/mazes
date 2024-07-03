@@ -30,6 +30,7 @@ int main() {
 	options.ystart = padding;
 	options.height = windowHeight;
 	options.width = windowWidth;
+	options.wallWidth = 1;
 
     bool creatingGrid = false;
     BinaryTreeState binaryTreeState;
@@ -109,6 +110,14 @@ int main() {
 
         if (IsKeyPressed(KEY_P)) {
             grid.playerEnabled = !grid.playerEnabled;
+        }
+        
+        if (IsKeyPressed(KEY_ONE)) {
+        	options.wallWidth++;
+        }
+        
+        if (IsKeyPressed(KEY_TWO)) {
+        	options.wallWidth--;
         }
 
         if (creatingGrid) {
