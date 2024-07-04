@@ -161,8 +161,4 @@ int Maze_MovePlayerInDirection(MazeGrid *grid, enum Direction direction) {
     return 1;
 }
 
-int Maze_IsPositionVisited(MazeGrid *grid, int position) {
-    return grid->cells[position].visited;
-}
-
 void Maze_FreeGrid(MazeGrid *grid) { free(grid->cells); }
