@@ -42,13 +42,34 @@ void Maze_DrawGrid(MazeGrid *grid, DrawOptions *options) {
             	end.y = y + cell_size;
                 DrawLineEx(start, end, options->wallWidth, WHITE);
             }
-            
-
 
             if (grid->playerEnabled && grid->playerPosition == position) {
                 DrawCircle(x + half_cell_size, y + half_cell_size,
                            half_cell_size, RED);
             }
+            x += cell_size;
+            position++;
+        }
+        x = options->xstart;
+        y += cell_size;
+    }
+}
+
+void Maze_ColorMaze(MazeGrid *grid, DistanceGrid *distanceGrid, DrawOptions *options) {
+    // figure out how big the cells of the grid should be based on the
+    // dimensions of the grid.
+    int cell_determinant =
+        grid->width < grid->height ? grid->height : grid->width;
+    int cell_size = (int)((double)options->width / (double)cell_determinant);
+    int x = options->xstart;
+    int y = options->ystart;
+    int position = 0;
+    Vector2 start;
+    Vector2 end;
+    for (int row = 0; row < grid->height; row++) {
+        for (int column = 0; column < grid->width; column++) {
+            //DrawRectangle(x, y, x + cell_size, y + cell_size, Fade(GREEN, ((double)distanceGrid->distances[position])/ 10.0));
+            DrawRectangle(x, y, x + cell_size, y + cell_size, GREEN);
             x += cell_size;
             position++;
         }

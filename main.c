@@ -6,6 +6,7 @@
 #include "draw.h"
 #include "generator.h"
 #include "grid.h"
+#include "dijkstra.h"
 
 int main() {
     srand(time(NULL));
@@ -16,6 +17,7 @@ int main() {
     MazeGrid grid;
     Maze_InitGrid(&grid, gridWidth, gridHeight);
 
+	DistanceGrid *distances = Maze_InitDistanceGrid(gridWidth, gridHeight);
     int padding = 10;
     int windowHeight = 500;
     int windowWidth = 500;
@@ -86,6 +88,7 @@ int main() {
             Maze_BinaryTree_InitState(&grid, &binaryTreeState);
         } else if (IsKeyPressed(KEY_B)) {
             Maze_BinaryTree(&grid);
+            distances = Maze_CalculateDistances(&grid, 0);
         }
 
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_S)) {
@@ -147,6 +150,9 @@ int main() {
         ClearBackground(BLACK);
 
         Maze_DrawGrid(&grid, &options);
+        if (distances != NULL) {
+        	//Maze_ColorMaze(&grid, distances, &options);
+        }
 
         EndDrawing();
     }
