@@ -8,6 +8,8 @@
 #include "generator.h"
 #include "grid.h"
 
+
+
 int main() {
     srand(time(NULL));
 
@@ -35,6 +37,7 @@ int main() {
     options.wallWidth = 1;
 
     bool creatingGrid = false;
+    bool mazeColored = false;
     BinaryTreeState binaryTreeState;
     SidewinderState sidewinderState;
     RandomWalkState randomWalkState;
@@ -52,6 +55,8 @@ int main() {
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_UP)) {
             gridHeight++;
             Maze_InitGrid(&grid, gridWidth, gridHeight);
+            distances = Maze_InitDistanceGrid(gridWidth, gridHeight);
+            mazeColored = false;
         } else if (IsKeyPressed(KEY_UP)) {
             Maze_MovePlayerInDirection(&grid, UP);
         }
@@ -59,6 +64,8 @@ int main() {
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_DOWN)) {
             gridHeight--;
             Maze_InitGrid(&grid, gridWidth, gridHeight);
+            distances = Maze_InitDistanceGrid(gridWidth, gridHeight);
+            mazeColored = false;
         } else if (IsKeyPressed(KEY_DOWN)) {
             Maze_MovePlayerInDirection(&grid, DOWN);
         }
@@ -66,6 +73,8 @@ int main() {
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_RIGHT)) {
             gridWidth++;
             Maze_InitGrid(&grid, gridWidth, gridHeight);
+            distances = Maze_InitDistanceGrid(gridWidth, gridHeight);
+            mazeColored = false;
         } else if (IsKeyPressed(KEY_RIGHT)) {
             Maze_MovePlayerInDirection(&grid, RIGHT);
         }
@@ -73,12 +82,16 @@ int main() {
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_LEFT)) {
             gridWidth--;
             Maze_InitGrid(&grid, gridWidth, gridHeight);
+            distances = Maze_InitDistanceGrid(gridWidth, gridHeight);
+            mazeColored = false;
         } else if (IsKeyPressed(KEY_LEFT)) {
             Maze_MovePlayerInDirection(&grid, LEFT);
         }
 
         if (IsKeyPressed(KEY_SPACE)) {
             Maze_InitGrid(&grid, gridWidth, gridHeight);
+            distances = Maze_InitDistanceGrid(gridWidth, gridHeight);
+            mazeColored = false;
         }
 
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_B)) {
@@ -88,7 +101,6 @@ int main() {
             Maze_BinaryTree_InitState(&grid, &binaryTreeState);
         } else if (IsKeyPressed(KEY_B)) {
             Maze_BinaryTree(&grid);
-            distances = Maze_CalculateDistances(&grid, 0);
         }
 
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_S)) {
@@ -109,6 +121,11 @@ int main() {
         } else if (IsKeyPressed(KEY_R)) {
             Maze_ResetVisitedState(&grid);
             Maze_RandomWalk(&grid);
+        }
+        
+        if (IsKeyPressed(KEY_C)) {
+        	distances = Maze_CalculateDistances(&grid, grid.playerPosition);
+        	mazeColored = true;
         }
 
         if (IsKeyPressed(KEY_P)) {
@@ -148,7 +165,11 @@ int main() {
 
         BeginDrawing();
         ClearBackground(BLACK);
-        Maze_ColorMaze(&grid, distances, &options);
+        
+        if (mazeColored) {
+        	Maze_ColorMaze(&grid, distances, &options);
+        }
+        
         Maze_DrawGrid(&grid, &options);
 
         EndDrawing();

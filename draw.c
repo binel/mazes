@@ -74,11 +74,11 @@ void Maze_ColorMaze(MazeGrid *grid, DistanceGrid *distanceGrid,
             float brightness = ((float)distanceGrid->distances[position] /
                                 (float)distanceGrid->maxDistance);
             DrawRectangle(x, y, cell_size, cell_size, Fade(GREEN, brightness));
-            // DrawRectangle(x, y, x + cell_size, y + cell_size, GREEN);
 
+			// this should be a draw options 
             char str[4];
             sprintf(str, "%3d", distanceGrid->distances[position]);
-            DrawText(str, x, y, 8, WHITE);
+            DrawText(str, x + 2, y + 2, 8, WHITE);
 
             x += cell_size;
             position++;
