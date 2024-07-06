@@ -3,10 +3,10 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "dijkstra.h"
 #include "draw.h"
 #include "generator.h"
 #include "grid.h"
-#include "dijkstra.h"
 
 int main() {
     srand(time(NULL));
@@ -17,7 +17,7 @@ int main() {
     MazeGrid grid;
     Maze_InitGrid(&grid, gridWidth, gridHeight);
 
-	DistanceGrid *distances = Maze_InitDistanceGrid(gridWidth, gridHeight);
+    DistanceGrid *distances = Maze_InitDistanceGrid(gridWidth, gridHeight);
     int padding = 10;
     int windowHeight = 500;
     int windowWidth = 500;
@@ -27,12 +27,12 @@ int main() {
                "mazes");
     SetTargetFPS(30);
 
-	DrawOptions options;
-	options.xstart = padding;
-	options.ystart = padding;
-	options.height = windowHeight;
-	options.width = windowWidth;
-	options.wallWidth = 1;
+    DrawOptions options;
+    options.xstart = padding;
+    options.ystart = padding;
+    options.height = windowHeight;
+    options.width = windowWidth;
+    options.wallWidth = 1;
 
     bool creatingGrid = false;
     BinaryTreeState binaryTreeState;
@@ -114,13 +114,13 @@ int main() {
         if (IsKeyPressed(KEY_P)) {
             grid.playerEnabled = !grid.playerEnabled;
         }
-        
+
         if (IsKeyPressed(KEY_ONE)) {
-        	options.wallWidth++;
+            options.wallWidth++;
         }
-        
+
         if (IsKeyPressed(KEY_TWO)) {
-        	options.wallWidth--;
+            options.wallWidth--;
         }
 
         if (creatingGrid) {
@@ -148,11 +148,8 @@ int main() {
 
         BeginDrawing();
         ClearBackground(BLACK);
-
+        Maze_ColorMaze(&grid, distances, &options);
         Maze_DrawGrid(&grid, &options);
-        if (distances != NULL) {
-        	//Maze_ColorMaze(&grid, distances, &options);
-        }
 
         EndDrawing();
     }

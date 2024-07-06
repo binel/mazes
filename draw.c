@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "draw.h"
 
 void Maze_DrawGrid(MazeGrid *grid, DrawOptions *options) {
@@ -15,31 +17,31 @@ void Maze_DrawGrid(MazeGrid *grid, DrawOptions *options) {
     for (int row = 0; row < grid->height; row++) {
         for (int column = 0; column < grid->width; column++) {
             if (grid->cells[position].top == CLOSED) {
-            	start.x = x;
-            	start.y = y;
-            	end.x = x + cell_size;
-            	end.y = y;
-            	DrawLineEx(start, end, options->wallWidth, WHITE);
+                start.x = x;
+                start.y = y;
+                end.x = x + cell_size;
+                end.y = y;
+                DrawLineEx(start, end, options->wallWidth, WHITE);
             }
             if (grid->cells[position].bottom == CLOSED) {
-            	start.x = x;
-            	start.y = y + cell_size;
-            	end.x = x + cell_size;
-            	end.y = y + cell_size;
-            	DrawLineEx(start, end, options->wallWidth, WHITE);
+                start.x = x;
+                start.y = y + cell_size;
+                end.x = x + cell_size;
+                end.y = y + cell_size;
+                DrawLineEx(start, end, options->wallWidth, WHITE);
             }
             if (grid->cells[position].right == CLOSED) {
-            	start.x = x + cell_size;
-            	start.y = y;
-            	end.x = x + cell_size;
-            	end.y = y + cell_size;
+                start.x = x + cell_size;
+                start.y = y;
+                end.x = x + cell_size;
+                end.y = y + cell_size;
                 DrawLineEx(start, end, options->wallWidth, WHITE);
             }
             if (grid->cells[position].left == CLOSED) {
-            	start.x = x;
-            	start.y = y;
-            	end.x = x;
-            	end.y = y + cell_size;
+                start.x = x;
+                start.y = y;
+                end.x = x;
+                end.y = y + cell_size;
                 DrawLineEx(start, end, options->wallWidth, WHITE);
             }
 
@@ -55,7 +57,8 @@ void Maze_DrawGrid(MazeGrid *grid, DrawOptions *options) {
     }
 }
 
-void Maze_ColorMaze(MazeGrid *grid, DistanceGrid *distanceGrid, DrawOptions *options) {
+void Maze_ColorMaze(MazeGrid *grid, DistanceGrid *distanceGrid,
+                    DrawOptions *options) {
     // figure out how big the cells of the grid should be based on the
     // dimensions of the grid.
     int cell_determinant =
@@ -68,8 +71,15 @@ void Maze_ColorMaze(MazeGrid *grid, DistanceGrid *distanceGrid, DrawOptions *opt
     Vector2 end;
     for (int row = 0; row < grid->height; row++) {
         for (int column = 0; column < grid->width; column++) {
-            //DrawRectangle(x, y, x + cell_size, y + cell_size, Fade(GREEN, ((double)distanceGrid->distances[position])/ 10.0));
-            DrawRectangle(x, y, x + cell_size, y + cell_size, GREEN);
+            float brightness = ((float)distanceGrid->distances[position] /
+                                (float)distanceGrid->maxDistance);
+            DrawRectangle(x, y, cell_size, cell_size, Fade(GREEN, brightness));
+            // DrawRectangle(x, y, x + cell_size, y + cell_size, GREEN);
+
+            char str[4];
+            sprintf(str, "%3d", distanceGrid->distances[position]);
+            DrawText(str, x, y, 8, WHITE);
+
             x += cell_size;
             position++;
         }
