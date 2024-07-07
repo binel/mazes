@@ -29,10 +29,6 @@ typedef struct {
     enum WallType left;
     // State of the right (east) wall
     enum WallType right;
-    // Used by some algorithms to see if the cell has previously
-    // been visited
-    // TODO split this out
-    bool visited;
 } MazeCell;
 
 /*
@@ -75,13 +71,6 @@ void Maze_InitGrid(MazeGrid *grid, int width, int height);
  * @param grid - the grid to free
  */
 void Maze_FreeGrid(MazeGrid *grid);
-
-/*
- * Resets every cell in the maze to be "unvisited"
- *
- * @param grid - the grid to reset
- */
-void Maze_ResetVisitedState(MazeGrid *grid);
 
 /*
  * Returns the position of the cell that is in the provided direction from the

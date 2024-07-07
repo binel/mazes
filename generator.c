@@ -95,8 +95,8 @@ void Maze_RandomWalk_Process(MazeGrid *grid, RandomWalkState *state) {
     // unfortunately we have to check if the cell we are already in
     // was visited to handle the startup condition. There might be
     // a better way to do this
-    if (!grid->cells[state->position].visited) {
-        grid->cells[state->position].visited = true;
+    if (!state->visited[state->position]) {
+        state->visited[state->position] = true;
     }
 
     int direction = rand() % 4;
@@ -120,7 +120,7 @@ void Maze_RandomWalk_Process(MazeGrid *grid, RandomWalkState *state) {
         return;
     }
 
-    if (!grid->cells[newPosition].visited) {
+    if (!state->visited[newPosition]) {
         switch (direction) {
         case 0:
             Maze_RemoveWall(grid, state->position, UP);
@@ -136,7 +136,7 @@ void Maze_RandomWalk_Process(MazeGrid *grid, RandomWalkState *state) {
             break;
         }
         state->unvisited -= 1;
-        grid->cells[newPosition].visited = true;
+        state->visited[newPosition] = true;
     }
 
     state->position = newPosition;
@@ -145,5 +145,6 @@ void Maze_RandomWalk_Process(MazeGrid *grid, RandomWalkState *state) {
 void Maze_RandomWalk_InitState(MazeGrid *grid, RandomWalkState *state) {
     state->position = rand() % (grid->width * grid->height);
     state->unvisited = (grid->width * grid->height) - 1;
+    state->visited = (bool *)malloc(grid->width * grid->height * sizeof(bool));
     state->finished = false;
 }

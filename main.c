@@ -117,9 +117,7 @@ int main() {
             maze = RANDOM_WALK;
             Maze_InitGrid(&grid, gridWidth, gridHeight);
             Maze_RandomWalk_InitState(&grid, &randomWalkState);
-            Maze_ResetVisitedState(&grid);
         } else if (IsKeyPressed(KEY_R)) {
-            Maze_ResetVisitedState(&grid);
             Maze_RandomWalk(&grid);
         }
         
