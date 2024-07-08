@@ -36,7 +36,8 @@ int main() {
     options.width = windowWidth;
     options.wallWidth = 1;
 
-    bool creatingGrid = false;
+    bool creatingMaze = false;
+    bool coloringGrid = false;
     bool mazeColored = false;
     BinaryTreeState binaryTreeState;
     SidewinderState sidewinderState;
@@ -121,7 +122,9 @@ int main() {
             Maze_RandomWalk(&grid);
         }
         
-        if (IsKeyPressed(KEY_C)) {
+        if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_C)) {
+        	coloringMaze = true;
+        } else if (IsKeyPressed(KEY_C)) {
         	distances = Maze_CalculateDistances(&grid, grid.playerPosition);
         	mazeColored = true;
         }
