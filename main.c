@@ -20,6 +20,8 @@ int main() {
     Maze_InitGrid(&grid, gridWidth, gridHeight);
 
     DistanceGrid *distances = Maze_InitDistanceGrid(gridWidth, gridHeight);
+    DistanceCalculationState *state = Maze_InitDistanceCalculationState(&grid, 0);
+    
     int padding = 10;
     int windowHeight = 500;
     int windowWidth = 500;
@@ -36,13 +38,15 @@ int main() {
     options.width = windowWidth;
     options.wallWidth = 1;
 
-    bool creatingMaze = false;
+    bool creatingGrid = false;
     bool coloringGrid = false;
     bool mazeColored = false;
     BinaryTreeState binaryTreeState;
     SidewinderState sidewinderState;
     RandomWalkState randomWalkState;
     enum MazeType maze;
+
+	
 
     while (!WindowShouldClose()) {
 
@@ -123,7 +127,9 @@ int main() {
         }
         
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_C)) {
-        	coloringMaze = true;
+        	coloringGrid = true;
+        	mazeColored = true;
+        	state = Maze_InitDistanceCalculationState(&grid, grid.playerPosition);
         } else if (IsKeyPressed(KEY_C)) {
         	distances = Maze_CalculateDistances(&grid, grid.playerPosition);
         	mazeColored = true;
@@ -163,6 +169,13 @@ int main() {
                 break;
             }
         }
+
+		if (coloringGrid) {
+			Maze_CalculateDistances_Process(&grid, distances, state);
+			if (state->complete) {
+				coloringGrid = false;
+			}
+		}
 
         BeginDrawing();
         ClearBackground(BLACK);

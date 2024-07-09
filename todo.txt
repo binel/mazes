@@ -2,6 +2,7 @@ Bugs
 - Resizing the window causes the grid to get messed up 
 - Resizing cell size doesn't work very well 
 - coloring for grids with many small cells looks bad 
+- Fix the memory leaks 
 
 Features 
 - Implement Wilson's 
