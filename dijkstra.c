@@ -59,31 +59,33 @@ void Maze_CalculateDistances_Process(MazeGrid *grid, DistanceGrid *distanceGrid,
 	if (state->frontierIndex == -1) {
 		// if there is nothing in the new frontier, we are done 
 		if (state->newFrontierIndex == -1) {
-			distanceGrid->maxDistance = state->distance;
 			state->complete = true;
 			return;
 		}
 		
 		// move newFrontier to be frontier 
-		for (int i = 0; i < state->newFrontierIndex; i++) {
+		for (int i = 0; i <= state->newFrontierIndex; i++) {
 			state->frontier[i] = state->newFrontier[i];
 		}
 		state->frontierIndex = state->newFrontierIndex;
 		state->newFrontierIndex = -1;
 		state->distance++;
+		distanceGrid->maxDistance = state->distance;
 	}
 
-	distanceGrid->distances[state->frontier[state->frontierIndex]] = state->distance;
-
+	int position = state->frontier[state->frontierIndex];
+	distanceGrid->distances[position] = state->distance;
+	state->frontierIndex -= 1;	
 	// add connected cells to the new Frontier
-	MazeCell cell = grid->cells[state->frontier[state->frontierIndex]];
-	int upIndex = Maze_GetPosition(grid, state->frontier[state->frontierIndex], UP);
+
+	MazeCell cell = grid->cells[position];
+	int upIndex = Maze_GetPosition(grid, position, UP);
 	int downIndex =
-		Maze_GetPosition(grid, state->frontier[state->frontierIndex], DOWN);
+		Maze_GetPosition(grid, position, DOWN);
 	int leftIndex =
-		Maze_GetPosition(grid, state->frontier[state->frontierIndex], LEFT);
+		Maze_GetPosition(grid, position, LEFT);
 	int rightIndex =
-		Maze_GetPosition(grid, state->frontier[state->frontierIndex], RIGHT);
+		Maze_GetPosition(grid, position, RIGHT);
 
 	if (cell.top == OPEN && upIndex != -1 &&
 		distanceGrid->distances[upIndex] == -1) {
@@ -110,5 +112,5 @@ void Maze_CalculateDistances_Process(MazeGrid *grid, DistanceGrid *distanceGrid,
 		state->newFrontier[state->newFrontierIndex] = rightIndex;
 	}
 
-	state->frontierIndex--;	
+
 }

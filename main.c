@@ -29,7 +29,7 @@ int main() {
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(windowWidth + (padding * 2), windowHeight + (padding * 2),
                "mazes");
-    SetTargetFPS(30);
+    SetTargetFPS(10);
 
     DrawOptions options;
     options.xstart = padding;
