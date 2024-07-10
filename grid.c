@@ -151,4 +151,4 @@ int Maze_MovePlayerInDirection(MazeGrid *grid, enum Direction direction) {
     return 1;
 }
 
-void Maze_FreeGrid(MazeGrid *grid) { free(grid->cells); }
+void Maze_FreeGrid(MazeGrid *grid) { Maze_free(grid->cells); }

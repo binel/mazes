@@ -4,15 +4,34 @@
 #include <raylib.h>
 #include <stdio.h>
 
+/*
+ * Every allocation is size_t larger than it needs to be (probably 8 bytes), 
+ * which is used to store the size of the allocation for logging
+ */
+
 void *Maze_malloc(size_t size) {
+    size_t *p = (size_t *)malloc(size + sizeof(size_t));
+    *p = size;
+    
     char logMessage[100];
     snprintf(logMessage, sizeof(logMessage), "Allocated %zu bytes", size);
-    TraceLog(LOG_INFO, logMessage);
+    TraceLog(LOG_INFO, logMessage);    
+    
+    return (void *)(p + 1);
+    
     return malloc(size);
 }
 
 void Maze_free(void *p) {
-    // TODO figure out how to log the amount of memory freed
-    TraceLog(LOG_INFO, "Freed memory");
-    free(p);
+	if (p) {
+		size_t *ptr = (size_t *)p - 1;
+		
+		char logMessage[100];
+		snprintf(logMessage, sizeof(logMessage), "Freed memory: %zu bytes", *ptr);
+		TraceLog(LOG_INFO, logMessage);
+				
+		free(ptr);
+	} else {
+		TraceLog(LOG_INFO, "Attempted to free null pointer");
+	}
 }
