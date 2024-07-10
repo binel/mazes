@@ -44,10 +44,10 @@ typedef struct {
     int position;    // the current position of the walker in the maze
     int unvisited;   // the count of cells that haven't yet been visited
     int maxPosition; // the index of the last cell of the maze
-    // an array the same size as the grid that indicates if a cell has already 
+    // an array the same size as the grid that indicates if a cell has already
     // been visited
     bool *visited;
-    bool finished;   // True if the generation is complete
+    bool finished; // True if the generation is complete
 } RandomWalkState;
 
 /*

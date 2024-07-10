@@ -8,8 +8,6 @@
 #include "generator.h"
 #include "grid.h"
 
-
-
 int main() {
     srand(time(NULL));
 
@@ -20,8 +18,9 @@ int main() {
     Maze_InitGrid(&grid, gridWidth, gridHeight);
 
     DistanceGrid *distances = Maze_InitDistanceGrid(gridWidth, gridHeight);
-    DistanceCalculationState *state = Maze_InitDistanceCalculationState(&grid, 0);
-    
+    DistanceCalculationState *state =
+        Maze_InitDistanceCalculationState(&grid, 0);
+
     int padding = 10;
     int windowHeight = 500;
     int windowWidth = 500;
@@ -45,8 +44,6 @@ int main() {
     SidewinderState sidewinderState;
     RandomWalkState randomWalkState;
     enum MazeType maze;
-
-	
 
     while (!WindowShouldClose()) {
 
@@ -125,14 +122,15 @@ int main() {
         } else if (IsKeyPressed(KEY_R)) {
             Maze_RandomWalk(&grid);
         }
-        
+
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_C)) {
-        	coloringGrid = true;
-        	mazeColored = true;
-        	state = Maze_InitDistanceCalculationState(&grid, grid.playerPosition);
+            coloringGrid = true;
+            mazeColored = true;
+            state =
+                Maze_InitDistanceCalculationState(&grid, grid.playerPosition);
         } else if (IsKeyPressed(KEY_C)) {
-        	distances = Maze_CalculateDistances(&grid, grid.playerPosition);
-        	mazeColored = true;
+            distances = Maze_CalculateDistances(&grid, grid.playerPosition);
+            mazeColored = true;
         }
 
         if (IsKeyPressed(KEY_P)) {
@@ -170,20 +168,20 @@ int main() {
             }
         }
 
-		if (coloringGrid) {
-			Maze_CalculateDistances_Process(&grid, distances, state);
-			if (state->complete) {
-				coloringGrid = false;
-			}
-		}
+        if (coloringGrid) {
+            Maze_CalculateDistances_Process(&grid, distances, state);
+            if (state->complete) {
+                coloringGrid = false;
+            }
+        }
 
         BeginDrawing();
         ClearBackground(BLACK);
-        
+
         if (mazeColored) {
-        	Maze_ColorMaze(&grid, distances, &options);
+            Maze_ColorMaze(&grid, distances, &options);
         }
-        
+
         Maze_DrawGrid(&grid, &options);
 
         EndDrawing();

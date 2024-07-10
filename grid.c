@@ -1,4 +1,5 @@
 #include "grid.h"
+#include "memory.h"
 
 void Maze_InitCell(MazeCell *cell) {
     cell->top = CLOSED;
@@ -8,7 +9,7 @@ void Maze_InitCell(MazeCell *cell) {
 }
 
 void Maze_InitGrid(MazeGrid *grid, int width, int height) {
-    grid->cells = malloc(width * height * sizeof(MazeCell));
+    grid->cells = Maze_malloc(width * height * sizeof(MazeCell));
     grid->width = width;
     grid->height = height;
     grid->playerPosition = 0;

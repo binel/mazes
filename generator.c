@@ -1,4 +1,5 @@
 #include "generator.h"
+#include "memory.h"
 
 void Maze_BinaryTree(MazeGrid *grid) {
     BinaryTreeState state;
@@ -145,6 +146,7 @@ void Maze_RandomWalk_Process(MazeGrid *grid, RandomWalkState *state) {
 void Maze_RandomWalk_InitState(MazeGrid *grid, RandomWalkState *state) {
     state->position = rand() % (grid->width * grid->height);
     state->unvisited = (grid->width * grid->height) - 1;
-    state->visited = (bool *)malloc(grid->width * grid->height * sizeof(bool));
+    state->visited =
+        (bool *)Maze_malloc(grid->width * grid->height * sizeof(bool));
     state->finished = false;
 }
