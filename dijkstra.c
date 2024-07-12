@@ -16,7 +16,10 @@ DistanceGrid *Maze_InitDistanceGrid(int width, int height) {
     return grid;
 }
 
-void Maze_FreeDistanceGrid(DistanceGrid *grid) { free(grid->distances); }
+void Maze_FreeDistanceGrid(DistanceGrid *grid) {
+	Maze_free(grid->distances);
+	Maze_free(grid);
+}
 
 DistanceGrid *Maze_CalculateDistances(MazeGrid *grid, int startingPosition) {
     DistanceGrid *distanceGrid =

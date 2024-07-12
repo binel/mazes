@@ -8,7 +8,8 @@ void Maze_InitCell(MazeCell *cell) {
     cell->left = CLOSED;
 }
 
-void Maze_InitGrid(MazeGrid *grid, int width, int height) {
+MazeGrid *Maze_InitGrid(int width, int height) {
+	MazeGrid *grid = Maze_malloc(sizeof(MazeGrid));
     grid->cells = Maze_malloc(width * height * sizeof(MazeCell));
     grid->width = width;
     grid->height = height;
@@ -23,6 +24,8 @@ void Maze_InitGrid(MazeGrid *grid, int width, int height) {
             i++;
         }
     }
+    
+    return grid;
 }
 
 int Maze_GetPosition(MazeGrid *grid, int position, enum Direction direction) {
@@ -151,4 +154,7 @@ int Maze_MovePlayerInDirection(MazeGrid *grid, enum Direction direction) {
     return 1;
 }
 
-void Maze_FreeGrid(MazeGrid *grid) { Maze_free(grid->cells); }
+void Maze_FreeGrid(MazeGrid *grid) { 
+	Maze_free(grid->cells);
+	Maze_free(grid);
+}

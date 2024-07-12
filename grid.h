@@ -59,11 +59,10 @@ void Maze_InitCell(MazeCell *cell);
  * Initializes a grid with the given width and height. All cells start out
  * fully closed
  *
- * @param grid - the grid to initialize
  * @param width - the width of the grid in cells
  * @param height - the height of the grid in cells
  */
-void Maze_InitGrid(MazeGrid *grid, int width, int height);
+MazeGrid *Maze_InitGrid(int width, int height);
 
 /*
  * Releases the memory of the given grid

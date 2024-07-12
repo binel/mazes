@@ -14,7 +14,11 @@ Features
 - Holding down a key while in "play" mode should have the player move in consecutive moves 
 - Implement a different way of rendering where walls are as big as passages
 - Some kind of "stats" mode to generate a bunch of mazes and count stats? 
-- Animate coloring the maze / dijkstra's 
+- Instead of having two different types of generation - instant and progress, 
+	just have the progress type. Each frame tries to make as much progress as possible.
+	Implement a configurable top cap on progress per frame so that you can slow down 
+	the animation. This would make it so slow generation types like random walk don't 
+	beachball on large mazes 
 
 
 Tech Debt
