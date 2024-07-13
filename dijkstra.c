@@ -8,7 +8,7 @@ DistanceGrid *Maze_InitDistanceGrid(int width, int height) {
     grid->width = width;
     grid->height = height;
     grid->maxDistance = -1;
-	grid->calculated = false;
+    grid->calculated = false;
     grid->distances = (int *)Maze_malloc(width * height * sizeof(int));
     for (int i = 0; i < width * height; i++) {
         grid->distances[i] = -1;
@@ -17,20 +17,20 @@ DistanceGrid *Maze_InitDistanceGrid(int width, int height) {
 }
 
 void Maze_FreeDistanceGrid(DistanceGrid *grid) {
-	Maze_free(grid->distances);
-	Maze_free(grid);
+    Maze_free(grid->distances);
+    Maze_free(grid);
 }
 
-DistanceGrid *Maze_ResizeDistanceGrid(DistanceGrid *grid, MazeGrid *mazeGrid) { 
-	Maze_FreeDistanceGrid(grid); 
-	return Maze_InitDistanceGrid(mazeGrid->width, mazeGrid->height); 
-} 
+DistanceGrid *Maze_ResizeDistanceGrid(DistanceGrid *grid, MazeGrid *mazeGrid) {
+    Maze_FreeDistanceGrid(grid);
+    return Maze_InitDistanceGrid(mazeGrid->width, mazeGrid->height);
+}
 
 void Maze_ResetDistanceGrid(DistanceGrid *grid) {
-	grid->calculated = false;
-	for (int i = 0; i < grid->width * grid->height; i++) {
-		grid->distances[i] = -1;
-	}
+    grid->calculated = false;
+    for (int i = 0; i < grid->width * grid->height; i++) {
+        grid->distances[i] = -1;
+    }
 }
 
 DistanceGrid *Maze_CalculateDistances(MazeGrid *grid, int startingPosition) {
@@ -43,7 +43,7 @@ DistanceGrid *Maze_CalculateDistances(MazeGrid *grid, int startingPosition) {
     while (!state->complete) {
         Maze_CalculateDistances_Process(grid, distanceGrid, state);
     }
-	distanceGrid->calculated = true;
+    distanceGrid->calculated = true;
     return distanceGrid;
 }
 
@@ -77,9 +77,9 @@ void Maze_CalculateDistances_Process(MazeGrid *grid, DistanceGrid *distanceGrid,
         return;
     }
 
-	if (!distanceGrid->calculated) {
-		distanceGrid->calculated = true;
-	}
+    if (!distanceGrid->calculated) {
+        distanceGrid->calculated = true;
+    }
 
     if (state->frontierIndex == -1) {
         // if there is nothing in the new frontier, we are done

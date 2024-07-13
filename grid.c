@@ -9,7 +9,7 @@ void Maze_InitCell(MazeCell *cell) {
 }
 
 MazeGrid *Maze_InitGrid(int width, int height) {
-	MazeGrid *grid = Maze_malloc(sizeof(MazeGrid));
+    MazeGrid *grid = Maze_malloc(sizeof(MazeGrid));
     grid->cells = Maze_malloc(width * height * sizeof(MazeCell));
     grid->width = width;
     grid->height = height;
@@ -24,30 +24,30 @@ MazeGrid *Maze_InitGrid(int width, int height) {
             i++;
         }
     }
-    
+
     return grid;
 }
 
 MazeGrid *Maze_ResizeGrid(MazeGrid *grid, int width, int height) {
-	Maze_FreeGrid(grid);
-	MazeGrid *newGrid = Maze_InitGrid(width, height);
-	return newGrid;
+    Maze_FreeGrid(grid);
+    MazeGrid *newGrid = Maze_InitGrid(width, height);
+    return newGrid;
 }
 
 MazeGrid *Maze_IncreaseGridWidth(MazeGrid *grid) {
-	return Maze_ResizeGrid(grid, grid->width + 1, grid->height);
+    return Maze_ResizeGrid(grid, grid->width + 1, grid->height);
 }
 
 MazeGrid *Maze_DecreaseGridWidth(MazeGrid *grid) {
-	return Maze_ResizeGrid(grid, grid->width - 1, grid->height);
+    return Maze_ResizeGrid(grid, grid->width - 1, grid->height);
 }
 
 MazeGrid *Maze_IncreaseGridHeight(MazeGrid *grid) {
-	return Maze_ResizeGrid(grid, grid->width, grid->height + 1);
+    return Maze_ResizeGrid(grid, grid->width, grid->height + 1);
 }
 
 MazeGrid *Maze_DecreaseGridHeight(MazeGrid *grid) {
-	return Maze_ResizeGrid(grid, grid->width, grid->height - 1);
+    return Maze_ResizeGrid(grid, grid->width, grid->height - 1);
 }
 
 void Maze_ResetGrid(MazeGrid *grid) {
@@ -188,7 +188,7 @@ int Maze_MovePlayerInDirection(MazeGrid *grid, enum Direction direction) {
     return 1;
 }
 
-void Maze_FreeGrid(MazeGrid *grid) { 
-	Maze_free(grid->cells);
-	Maze_free(grid);
+void Maze_FreeGrid(MazeGrid *grid) {
+    Maze_free(grid->cells);
+    Maze_free(grid);
 }

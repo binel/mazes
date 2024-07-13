@@ -49,7 +49,7 @@ DistanceGrid *Maze_InitDistanceGrid(int width, int height);
  */
 void Maze_FreeDistanceGrid(DistanceGrid *grid);
 
-DistanceGrid *Maze_ResizeDistanceGrid(DistanceGrid *grid, MazeGrid *mazeGrid); 
+DistanceGrid *Maze_ResizeDistanceGrid(DistanceGrid *grid, MazeGrid *mazeGrid);
 
 void Maze_ResetDistanceGrid(DistanceGrid *grid);
 

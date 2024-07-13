@@ -9,15 +9,15 @@
 #include "grid.h"
 #include "memory.h"
 
-static void ResizeDistanceGrid(MazeGrid* grid, DistanceGrid** distances) {
-	Maze_FreeDistanceGrid(*distances);
-	*distances = Maze_InitDistanceGrid(grid->width, grid->height);
+static void ResizeDistanceGrid(MazeGrid *grid, DistanceGrid **distances) {
+    Maze_FreeDistanceGrid(*distances);
+    *distances = Maze_InitDistanceGrid(grid->width, grid->height);
 }
 
 int main() {
     srand(time(NULL));
 
-    MazeGrid* grid = Maze_InitGrid(15, 15);
+    MazeGrid *grid = Maze_InitGrid(15, 15);
 
     DistanceGrid *distances = Maze_InitDistanceGrid(15, 15);
     DistanceCalculationState *state =
@@ -84,8 +84,8 @@ int main() {
         }
 
         if (IsKeyPressed(KEY_SPACE)) {
-        	Maze_ResetGrid(grid);
-			Maze_ResetDistanceGrid(distances);
+            Maze_ResetGrid(grid);
+            Maze_ResetDistanceGrid(distances);
         }
 
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_B)) {
