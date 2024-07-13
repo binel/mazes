@@ -21,6 +21,17 @@ void Maze_FreeDistanceGrid(DistanceGrid *grid) {
 	Maze_free(grid);
 }
 
+DistanceGrid *Maze_ResizeDistanceGrid(DistanceGrid *grid, MazeGrid *mazeGrid) { 
+	Maze_FreeDistanceGrid(grid); 
+	return Maze_InitDistanceGrid(mazeGrid->width, mazeGrid->height); 
+} 
+
+void Maze_ResetDistanceGrid(DistanceGrid *grid) {
+	for (int i = 0; i < grid->width * grid->height; i++) {
+		grid->distances[i] = -1;
+	}
+}
+
 DistanceGrid *Maze_CalculateDistances(MazeGrid *grid, int startingPosition) {
     DistanceGrid *distanceGrid =
         Maze_InitDistanceGrid(grid->width, grid->height);

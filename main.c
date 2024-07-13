@@ -9,22 +9,17 @@
 #include "grid.h"
 #include "memory.h"
 
-static void ResizeGrid(int width, int height, MazeGrid** grid, DistanceGrid** distances) {
-	Maze_FreeGrid(*grid);
+static void ResizeDistanceGrid(MazeGrid* grid, DistanceGrid** distances) {
 	Maze_FreeDistanceGrid(*distances);
-	*grid = Maze_InitGrid(width, height);
-	*distances = Maze_InitDistanceGrid(width, height);
+	*distances = Maze_InitDistanceGrid(grid->width, grid->height);
 }
 
 int main() {
     srand(time(NULL));
 
-    int gridWidth = 15;
-    int gridHeight = 15;
+    MazeGrid* grid = Maze_InitGrid(15, 15);
 
-    MazeGrid* grid = Maze_InitGrid(gridWidth, gridHeight);
-
-    DistanceGrid *distances = Maze_InitDistanceGrid(gridWidth, gridHeight);
+    DistanceGrid *distances = Maze_InitDistanceGrid(15, 15);
     DistanceCalculationState *state =
         Maze_InitDistanceCalculationState(grid, 0);
 
@@ -62,47 +57,47 @@ int main() {
         }
 
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_UP)) {
-            gridHeight++;
-			ResizeGrid(gridWidth, gridHeight, &grid, &distances);
+            grid = Maze_IncreaseGridHeight(grid);
+            distances = Maze_ResizeDistanceGrid(distances, grid);
             mazeColored = false;
         } else if (IsKeyPressed(KEY_UP)) {
             Maze_MovePlayerInDirection(grid, UP);
         }
 
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_DOWN)) {
-            gridHeight--;
-			ResizeGrid(gridWidth, gridHeight, &grid, &distances);
+            grid = Maze_DecreaseGridHeight(grid);
+            distances = Maze_ResizeDistanceGrid(distances, grid);
             mazeColored = false;
         } else if (IsKeyPressed(KEY_DOWN)) {
             Maze_MovePlayerInDirection(grid, DOWN);
         }
 
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_RIGHT)) {
-            gridWidth++;
-			ResizeGrid(gridWidth, gridHeight, &grid, &distances);
+            grid = Maze_IncreaseGridWidth(grid);
+            distances = Maze_ResizeDistanceGrid(distances, grid);
             mazeColored = false;
         } else if (IsKeyPressed(KEY_RIGHT)) {
             Maze_MovePlayerInDirection(grid, RIGHT);
         }
 
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_LEFT)) {
-            gridWidth--;
-			ResizeGrid(gridWidth, gridHeight, &grid, &distances);
+            grid = Maze_DecreaseGridWidth(grid);
+            distances = Maze_ResizeDistanceGrid(distances, grid);
             mazeColored = false;
         } else if (IsKeyPressed(KEY_LEFT)) {
             Maze_MovePlayerInDirection(grid, LEFT);
         }
 
         if (IsKeyPressed(KEY_SPACE)) {
-			ResizeGrid(gridWidth, gridHeight, &grid, &distances);
+        	Maze_ResetGrid(grid);
+			Maze_ResetDistanceGrid(distances);
             mazeColored = false;
         }
 
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_B)) {
             creatingGrid = true;
             maze = BINARY_TREE;
-            Maze_FreeGrid(grid);
-            grid = Maze_InitGrid(gridWidth, gridHeight);
+            Maze_ResetGrid(grid);
             Maze_BinaryTree_InitState(grid, &binaryTreeState);
         } else if (IsKeyPressed(KEY_B)) {
             Maze_BinaryTree(grid);
@@ -111,8 +106,7 @@ int main() {
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_S)) {
             creatingGrid = true;
             maze = SIDEWINDER;
-            Maze_FreeGrid(grid);
-            Maze_InitGrid(gridWidth, gridHeight);
+            Maze_ResetGrid(grid);
             Maze_Sidewinder_InitState(grid, &sidewinderState);
         } else if (IsKeyPressed(KEY_S)) {
             Maze_Sidewinder(grid);
@@ -121,8 +115,7 @@ int main() {
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_R)) {
             creatingGrid = true;
             maze = RANDOM_WALK;
-            Maze_FreeGrid(grid);
-            grid = Maze_InitGrid(gridWidth, gridHeight);
+            Maze_ResetGrid(grid);
             Maze_RandomWalk_InitState(grid, &randomWalkState);
         } else if (IsKeyPressed(KEY_R)) {
             Maze_RandomWalk(grid);

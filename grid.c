@@ -28,6 +28,40 @@ MazeGrid *Maze_InitGrid(int width, int height) {
     return grid;
 }
 
+MazeGrid *Maze_ResizeGrid(MazeGrid *grid, int width, int height) {
+	Maze_FreeGrid(grid);
+	MazeGrid *newGrid = Maze_InitGrid(width, height);
+	return newGrid;
+}
+
+MazeGrid *Maze_IncreaseGridWidth(MazeGrid *grid) {
+	return Maze_ResizeGrid(grid, grid->width + 1, grid->height);
+}
+
+MazeGrid *Maze_DecreaseGridWidth(MazeGrid *grid) {
+	return Maze_ResizeGrid(grid, grid->width - 1, grid->height);
+}
+
+MazeGrid *Maze_IncreaseGridHeight(MazeGrid *grid) {
+	return Maze_ResizeGrid(grid, grid->width, grid->height + 1);
+}
+
+MazeGrid *Maze_DecreaseGridHeight(MazeGrid *grid) {
+	return Maze_ResizeGrid(grid, grid->width, grid->height - 1);
+}
+
+void Maze_ResetGrid(MazeGrid *grid) {
+    grid->playerPosition = 0;
+    grid->playerEnabled = true;
+    int i = 0;
+    for (int row = 0; row < grid->height; row++) {
+        for (int column = 0; column < grid->width; column++) {
+            Maze_InitCell(&grid->cells[i]);
+            i++;
+        }
+    }
+}
+
 int Maze_GetPosition(MazeGrid *grid, int position, enum Direction direction) {
 
     // error handling

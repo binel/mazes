@@ -65,6 +65,26 @@ void Maze_InitCell(MazeCell *cell);
 MazeGrid *Maze_InitGrid(int width, int height);
 
 /*
+ * Resizes the grid to have the given width and height. This does not 
+ * preserve the state of the cells within the grid 
+ *
+ * @param grid - the old grid to resize 
+ * @param width - the new width of the grid 
+ * @param height - the new height of the grid
+ */
+MazeGrid *Maze_ResizeGrid(MazeGrid *grid, int width, int height); 
+
+MazeGrid *Maze_IncreaseGridWidth(MazeGrid *grid);
+
+MazeGrid *Maze_DecreaseGridWidth(MazeGrid *grid);
+
+MazeGrid *Maze_IncreaseGridHeight(MazeGrid *grid);
+
+MazeGrid *Maze_DecreaseGridHeight(MazeGrid *grid);
+
+void Maze_ResetGrid(MazeGrid *grid);
+
+/*
  * Releases the memory of the given grid
  *
  * @param grid - the grid to free
