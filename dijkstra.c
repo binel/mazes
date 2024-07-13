@@ -8,7 +8,7 @@ DistanceGrid *Maze_InitDistanceGrid(int width, int height) {
     grid->width = width;
     grid->height = height;
     grid->maxDistance = -1;
-
+	grid->calculated = false;
     grid->distances = (int *)Maze_malloc(width * height * sizeof(int));
     for (int i = 0; i < width * height; i++) {
         grid->distances[i] = -1;
@@ -27,6 +27,7 @@ DistanceGrid *Maze_ResizeDistanceGrid(DistanceGrid *grid, MazeGrid *mazeGrid) {
 } 
 
 void Maze_ResetDistanceGrid(DistanceGrid *grid) {
+	grid->calculated = false;
 	for (int i = 0; i < grid->width * grid->height; i++) {
 		grid->distances[i] = -1;
 	}
@@ -42,7 +43,7 @@ DistanceGrid *Maze_CalculateDistances(MazeGrid *grid, int startingPosition) {
     while (!state->complete) {
         Maze_CalculateDistances_Process(grid, distanceGrid, state);
     }
-
+	distanceGrid->calculated = true;
     return distanceGrid;
 }
 
@@ -75,6 +76,10 @@ void Maze_CalculateDistances_Process(MazeGrid *grid, DistanceGrid *distanceGrid,
     if (state->complete) {
         return;
     }
+
+	if (!distanceGrid->calculated) {
+		distanceGrid->calculated = true;
+	}
 
     if (state->frontierIndex == -1) {
         // if there is nothing in the new frontier, we are done

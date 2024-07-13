@@ -59,6 +59,11 @@ void Maze_DrawGrid(MazeGrid *grid, DrawOptions *options) {
 
 void Maze_ColorMaze(MazeGrid *grid, DistanceGrid *distanceGrid,
                     DrawOptions *options) {
+    // don't do any coloring if nothing has been calculated 
+    if (!distanceGrid->calculated) {
+    	return;
+    }
+                    
     // figure out how big the cells of the grid should be based on the
     // dimensions of the grid.
     int cell_determinant =

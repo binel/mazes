@@ -16,6 +16,8 @@ typedef struct {
     // an array width * height in size, that describes the distance from the
     // starting position.
     int *distances;
+    // Once any distances have been calculated, this will be set to true
+    bool calculated;
 } DistanceGrid;
 
 /*
