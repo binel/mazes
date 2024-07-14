@@ -8,6 +8,7 @@
 #include "generator.h"
 #include "grid.h"
 #include "memory.h"
+#include "binaryTree.h"
 
 static void ResizeDistanceGrid(MazeGrid *grid, DistanceGrid **distances) {
     Maze_FreeDistanceGrid(*distances);
@@ -41,7 +42,6 @@ int main() {
 
     bool creatingGrid = false;
     bool coloringGrid = false;
-    BinaryTreeState binaryTreeState;
     SidewinderState sidewinderState;
     RandomWalkState randomWalkState;
     enum MazeType maze;
@@ -92,7 +92,7 @@ int main() {
             creatingGrid = true;
             maze = BINARY_TREE;
             Maze_ResetGrid(grid);
-            Maze_BinaryTree_InitState(grid, &binaryTreeState);
+            Maze_BinaryTree_Reset(grid);
         } else if (IsKeyPressed(KEY_B)) {
             Maze_BinaryTree(grid);
         }
@@ -138,8 +138,7 @@ int main() {
         if (creatingGrid) {
             switch (maze) {
             case BINARY_TREE:
-                Maze_BinaryTree_Process(grid, &binaryTreeState);
-                if (binaryTreeState.finished) {
+                if (Maze_BinaryTree_Process(grid)) {
                     creatingGrid = false;
                 }
                 break;

@@ -19,15 +19,6 @@
 enum MazeType { BINARY_TREE, SIDEWINDER, RANDOM_WALK };
 
 /*
- * Holds the state required to generate a binary tree maze.
- */
-typedef struct {
-    int position;    // the current position in the maze
-    int maxPosition; // the index of the last cell in the maze
-    bool finished;   // True if generation is complete
-} BinaryTreeState;
-
-/*
  * Holds the state required to generate a sidewinder maze
  */
 typedef struct {
@@ -50,46 +41,6 @@ typedef struct {
     bool finished; // True if the generation is complete
 } RandomWalkState;
 
-/*
- * Generates a maze using the Binary Tree algorithm. This generates a maze in
- * O(n) time, but the maze has significant limitations. It has a very noticeable
- * diagonal character, and two sides of the maze will always have completely
- * open corridors. In this implementation it is the bottom and right walls. Here
- * is an example maze:
- *
- * +---+---+---+---+---+
- * |       |       |   |
- * +---+   +---+   +   +
- * |       |       |   |
- * +---+   +---+   +   +
- * |   |   |   |       |
- * +   +   +   +---+   +
- * |   |       |       |
- * +   +---+   +---+   +
- * |                   |
- * +---+---+---+---+---+
- *
- * @param grid The maze grid to etch the maze into.
- */
-void Maze_BinaryTree(MazeGrid *grid);
-
-/*
- * Generates a binary tree maze step-by-step. Each call to this function will
- * complete one additional step of the maze generation process. This is useful
- * for animating the maze generation process
- *
- * @param grid - the grid to etch the maze into.
- * @param state - the current state of the generation process.
- */
-void Maze_BinaryTree_Process(MazeGrid *grid, BinaryTreeState *state);
-
-/*
- * Initializes the BinaryTreeState so it is ready to be used to generate a maze.
- *
- * @param grid - the grid that will be used for generation. It is not modified
- * @param state - the state to initialize
- */
-void Maze_BinaryTree_InitState(MazeGrid *grid, BinaryTreeState *state);
 
 /*
  * Generates a maze using the sidewinder algorithm. This generates a maze in

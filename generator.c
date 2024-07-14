@@ -1,46 +1,6 @@
 #include "generator.h"
 #include "memory.h"
 
-void Maze_BinaryTree(MazeGrid *grid) {
-    BinaryTreeState state;
-    Maze_BinaryTree_InitState(grid, &state);
-
-    while (!state.finished) {
-        Maze_BinaryTree_Process(grid, &state);
-    }
-}
-
-void Maze_BinaryTree_Process(MazeGrid *grid, BinaryTreeState *state) {
-    if (state->position > state->maxPosition) {
-        state->finished = true;
-        return;
-    }
-
-    // if there is a down and right neighbor, randomly pick one to open
-    int hasDown = Maze_HasNeighbor(grid, state->position, DOWN);
-    int hasRight = Maze_HasNeighbor(grid, state->position, RIGHT);
-    if (hasDown && hasRight) {
-        if (rand() % 2 == 0) {
-            Maze_RemoveWall(grid, state->position, DOWN);
-        } else {
-            Maze_RemoveWall(grid, state->position, RIGHT);
-        }
-    }
-    // if only south or east, open that one
-    else if (hasDown) {
-        Maze_RemoveWall(grid, state->position, DOWN);
-    } else if (hasRight) {
-        Maze_RemoveWall(grid, state->position, RIGHT);
-    }
-    state->position++;
-}
-
-void Maze_BinaryTree_InitState(MazeGrid *grid, BinaryTreeState *state) {
-    state->position = 0;
-    state->maxPosition = (grid->width * grid->height) - 1;
-    state->finished = false;
-}
-
 void Maze_Sidewinder(MazeGrid *grid) {
     SidewinderState state;
     Maze_Sidewinder_InitState(grid, &state);
