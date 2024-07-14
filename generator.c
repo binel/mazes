@@ -27,6 +27,7 @@ void Maze_Generate_SetType(MazeGrid *grid, enum MazeType type) {
 	Maze_RandomWalk_Reset(grid);
 	Maze_BinaryTree_Reset(grid);
 	Maze_Sidewinder_Reset(grid);
+	Maze_ResetGrid(grid);
 	_currentMaze = type;
 	_currentlyGenerating = true;
 }

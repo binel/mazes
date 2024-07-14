@@ -40,7 +40,6 @@ int main() {
     options.width = windowWidth;
 
     bool coloringGrid = false;
-    enum MazeType maze;
 
     while (!WindowShouldClose()) {
 
@@ -86,21 +85,18 @@ int main() {
 
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_B)) {
         	Maze_Generate_SetType(grid, BINARY_TREE);
-            Maze_ResetGrid(grid);
         } else if (IsKeyPressed(KEY_B)) {
             Maze_Generate_Now(grid, BINARY_TREE);
         }
 
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_S)) {
         	Maze_Generate_SetType(grid, SIDEWINDER);
-            Maze_ResetGrid(grid);
         } else if (IsKeyPressed(KEY_S)) {
             Maze_Generate_Now(grid, SIDEWINDER);
         }
 
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_R)) {
         	Maze_Generate_SetType(grid, RANDOM_WALK);
-            Maze_ResetGrid(grid);
         } else if (IsKeyPressed(KEY_R)) {
             Maze_Generate_Now(grid, RANDOM_WALK);
         }
