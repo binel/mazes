@@ -18,15 +18,6 @@
  */
 enum MazeType { BINARY_TREE, SIDEWINDER, RANDOM_WALK };
 
-/*
- * Holds the state required to generate a sidewinder maze
- */
-typedef struct {
-    int runLength;   // the length of the current "run"
-    int position;    // the current position in the maze
-    int maxPosition; // the index of the last cell in the maze
-    bool finished;   // True if generation is complete
-} SidewinderState;
 
 /*
  * Holds the state required to generate a random walk maze.
@@ -40,47 +31,6 @@ typedef struct {
     bool *visited;
     bool finished; // True if the generation is complete
 } RandomWalkState;
-
-
-/*
- * Generates a maze using the sidewinder algorithm. This generates a maze in
- * O(n) time. This maze is similar to Binary Tree mazes, but only a single side
- * of the maze have completely open corridors - in this implementation the
- * bottom. Here is an example:
- *
- * +---+---+---+---+---+
- * |       |       |   |
- * +---+   +---+   +   +
- * |   |   |   |   |   |
- * +   +   +   +   +   +
- * |                   |
- * +---+---+   +---+---+
- * |   |   |   |       |
- * +   +   +   +   +---+
- * |                   |
- * +---+---+---+---+---+
- *
- * @param grid The maze grid to etch the maze into.
- */
-void Maze_Sidewinder(MazeGrid *grid);
-
-/*
- * Generates a sidewinder maze step-by-step. Each call to this function will
- * complete one additional step of the maze generation process. This is useful
- * for animating the maze generation process.
- *
- * @param grid - the grid to etch the maze into.
- * @param state - the current state of the maze generation process.
- */
-void Maze_Sidewinder_Process(MazeGrid *grid, SidewinderState *state);
-
-/*
- * Initializes the SidewinderState so it is ready to be used to generate a maze.
- *
- * @param grid - the grid that will be used for generation. It is not modified.
- * @param state - the state to initialize
- */
-void Maze_Sidewinder_InitState(MazeGrid *grid, SidewinderState *state);
 
 /*
  * Generates a maze using a random walk. This is also called the

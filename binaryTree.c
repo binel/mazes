@@ -3,13 +3,8 @@
 static int _position;
 static int _maxPosition;
 
-static void Maze_BinaryTree_InitState(MazeGrid *grid) {
-    _position = 0;
-    _maxPosition = (grid->width * grid->height) - 1;
-}
-
 void Maze_BinaryTree(MazeGrid *grid) {
-    Maze_BinaryTree_InitState(grid);
+    Maze_BinaryTree_Reset(grid);
 	bool done = false;
     while (!done) {
         done = Maze_BinaryTree_Process(grid);
@@ -43,6 +38,7 @@ bool Maze_BinaryTree_Process(MazeGrid *grid) {
 }
 
 void Maze_BinaryTree_Reset(MazeGrid *grid) {
-	Maze_BinaryTree_InitState(grid);
+    _position = 0;
+    _maxPosition = (grid->width * grid->height) - 1;
 }
 

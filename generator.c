@@ -1,42 +1,7 @@
 #include "generator.h"
 #include "memory.h"
 
-void Maze_Sidewinder(MazeGrid *grid) {
-    SidewinderState state;
-    Maze_Sidewinder_InitState(grid, &state);
 
-    while (!state.finished) {
-        Maze_Sidewinder_Process(grid, &state);
-    }
-}
-
-void Maze_Sidewinder_Process(MazeGrid *grid, SidewinderState *state) {
-    if (state->position >= state->maxPosition) {
-        state->finished = true;
-        return;
-    }
-
-    int hasDown = Maze_HasNeighbor(grid, state->position, DOWN);
-    int hasRight = Maze_HasNeighbor(grid, state->position, RIGHT);
-    state->runLength++;
-    // should end run
-    if (!hasRight || (hasDown && rand() % 2 == 0)) {
-        int openDownPos = state->position - (rand() % state->runLength);
-        Maze_RemoveWall(grid, openDownPos, DOWN);
-
-        state->runLength = 0;
-    } else {
-        Maze_RemoveWall(grid, state->position, RIGHT);
-    }
-    state->position++;
-}
-
-void Maze_Sidewinder_InitState(MazeGrid *grid, SidewinderState *state) {
-    state->position = 0;
-    state->runLength = 0;
-    state->maxPosition = (grid->width * grid->height) - 1;
-    state->finished = false;
-}
 
 void Maze_RandomWalk(MazeGrid *grid) {
     RandomWalkState state;

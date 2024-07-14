@@ -9,6 +9,7 @@
 #include "grid.h"
 #include "memory.h"
 #include "binaryTree.h"
+#include "sidewinder.h"
 
 static void ResizeDistanceGrid(MazeGrid *grid, DistanceGrid **distances) {
     Maze_FreeDistanceGrid(*distances);
@@ -42,7 +43,6 @@ int main() {
 
     bool creatingGrid = false;
     bool coloringGrid = false;
-    SidewinderState sidewinderState;
     RandomWalkState randomWalkState;
     enum MazeType maze;
 
@@ -101,7 +101,7 @@ int main() {
             creatingGrid = true;
             maze = SIDEWINDER;
             Maze_ResetGrid(grid);
-            Maze_Sidewinder_InitState(grid, &sidewinderState);
+            Maze_Sidewinder_Reset(grid);
         } else if (IsKeyPressed(KEY_S)) {
             Maze_Sidewinder(grid);
         }
@@ -143,10 +143,10 @@ int main() {
                 }
                 break;
             case SIDEWINDER:
-                Maze_Sidewinder_Process(grid, &sidewinderState);
-                if (sidewinderState.finished) {
+                if (Maze_Sidewinder_Process(grid)) {
                     creatingGrid = false;
                 }
+                break;
             case RANDOM_WALK:
                 Maze_RandomWalk_Process(grid, &randomWalkState);
                 if (randomWalkState.finished) {
