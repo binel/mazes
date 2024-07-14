@@ -10,6 +10,7 @@
 #include "memory.h"
 #include "binaryTree.h"
 #include "sidewinder.h"
+#include "randomWalk.h"
 
 static void ResizeDistanceGrid(MazeGrid *grid, DistanceGrid **distances) {
     Maze_FreeDistanceGrid(*distances);
@@ -43,7 +44,6 @@ int main() {
 
     bool creatingGrid = false;
     bool coloringGrid = false;
-    RandomWalkState randomWalkState;
     enum MazeType maze;
 
     while (!WindowShouldClose()) {
@@ -110,7 +110,7 @@ int main() {
             creatingGrid = true;
             maze = RANDOM_WALK;
             Maze_ResetGrid(grid);
-            Maze_RandomWalk_InitState(grid, &randomWalkState);
+            Maze_RandomWalk_Reset(grid);
         } else if (IsKeyPressed(KEY_R)) {
             Maze_RandomWalk(grid);
         }
@@ -148,10 +148,10 @@ int main() {
                 }
                 break;
             case RANDOM_WALK:
-                Maze_RandomWalk_Process(grid, &randomWalkState);
-                if (randomWalkState.finished) {
+                if (Maze_RandomWalk_Process(grid)) {
                     creatingGrid = false;
                 }
+                break;
             default:
                 break;
             }
