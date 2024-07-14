@@ -38,7 +38,6 @@ int main() {
     options.ystart = padding;
     options.height = windowHeight;
     options.width = windowWidth;
-    options.wallWidth = 1;
 
     bool coloringGrid = false;
     enum MazeType maze;
@@ -116,14 +115,6 @@ int main() {
 
         if (IsKeyPressed(KEY_P)) {
             grid->playerEnabled = !grid->playerEnabled;
-        }
-
-        if (IsKeyPressed(KEY_ONE)) {
-            options.wallWidth++;
-        }
-
-        if (IsKeyPressed(KEY_TWO)) {
-            options.wallWidth--;
         }
 
         Maze_Generate_Next_Step(grid);

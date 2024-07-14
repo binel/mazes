@@ -21,28 +21,28 @@ void Maze_DrawGrid(MazeGrid *grid, DrawOptions *options) {
                 start.y = y;
                 end.x = x + cell_size;
                 end.y = y;
-                DrawLineEx(start, end, options->wallWidth, WHITE);
+                DrawLineEx(start, end, 1, WHITE);
             }
             if (grid->cells[position].bottom == CLOSED) {
                 start.x = x;
                 start.y = y + cell_size;
                 end.x = x + cell_size;
                 end.y = y + cell_size;
-                DrawLineEx(start, end, options->wallWidth, WHITE);
+                DrawLineEx(start, end, 1, WHITE);
             }
             if (grid->cells[position].right == CLOSED) {
                 start.x = x + cell_size;
                 start.y = y;
                 end.x = x + cell_size;
                 end.y = y + cell_size;
-                DrawLineEx(start, end, options->wallWidth, WHITE);
+                DrawLineEx(start, end, 1, WHITE);
             }
             if (grid->cells[position].left == CLOSED) {
                 start.x = x;
                 start.y = y;
                 end.x = x;
                 end.y = y + cell_size;
-                DrawLineEx(start, end, options->wallWidth, WHITE);
+                DrawLineEx(start, end, 1, WHITE);
             }
 
             if (grid->playerEnabled && grid->playerPosition == position) {
