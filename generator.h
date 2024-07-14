@@ -16,8 +16,12 @@
 /*
  * Each of the different kinds of mazes we are capable of producing
  */
-enum MazeType { BINARY_TREE, SIDEWINDER, RANDOM_WALK };
+enum MazeType { NONE, BINARY_TREE, SIDEWINDER, RANDOM_WALK };
 
+void Maze_Generate_Now(MazeGrid *grid, enum MazeType type);
 
+void Maze_Generate_SetType(MazeGrid *grid, enum MazeType type);
+
+bool Maze_Generate_Next_Step(MazeGrid *grid);
 
 #endif

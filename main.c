@@ -8,9 +8,7 @@
 #include "generator.h"
 #include "grid.h"
 #include "memory.h"
-#include "binaryTree.h"
-#include "sidewinder.h"
-#include "randomWalk.h"
+
 
 static void ResizeDistanceGrid(MazeGrid *grid, DistanceGrid **distances) {
     Maze_FreeDistanceGrid(*distances);
@@ -42,7 +40,6 @@ int main() {
     options.width = windowWidth;
     options.wallWidth = 1;
 
-    bool creatingGrid = false;
     bool coloringGrid = false;
     enum MazeType maze;
 
@@ -89,30 +86,24 @@ int main() {
         }
 
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_B)) {
-            creatingGrid = true;
-            maze = BINARY_TREE;
+        	Maze_Generate_SetType(grid, BINARY_TREE);
             Maze_ResetGrid(grid);
-            Maze_BinaryTree_Reset(grid);
         } else if (IsKeyPressed(KEY_B)) {
-            Maze_BinaryTree(grid);
+            Maze_Generate_Now(grid, BINARY_TREE);
         }
 
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_S)) {
-            creatingGrid = true;
-            maze = SIDEWINDER;
+        	Maze_Generate_SetType(grid, SIDEWINDER);
             Maze_ResetGrid(grid);
-            Maze_Sidewinder_Reset(grid);
         } else if (IsKeyPressed(KEY_S)) {
-            Maze_Sidewinder(grid);
+            Maze_Generate_Now(grid, SIDEWINDER);
         }
 
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_R)) {
-            creatingGrid = true;
-            maze = RANDOM_WALK;
+        	Maze_Generate_SetType(grid, RANDOM_WALK);
             Maze_ResetGrid(grid);
-            Maze_RandomWalk_Reset(grid);
         } else if (IsKeyPressed(KEY_R)) {
-            Maze_RandomWalk(grid);
+            Maze_Generate_Now(grid, RANDOM_WALK);
         }
 
         if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_C)) {
@@ -135,27 +126,7 @@ int main() {
             options.wallWidth--;
         }
 
-        if (creatingGrid) {
-            switch (maze) {
-            case BINARY_TREE:
-                if (Maze_BinaryTree_Process(grid)) {
-                    creatingGrid = false;
-                }
-                break;
-            case SIDEWINDER:
-                if (Maze_Sidewinder_Process(grid)) {
-                    creatingGrid = false;
-                }
-                break;
-            case RANDOM_WALK:
-                if (Maze_RandomWalk_Process(grid)) {
-                    creatingGrid = false;
-                }
-                break;
-            default:
-                break;
-            }
-        }
+        Maze_Generate_Next_Step(grid);
 
         if (coloringGrid) {
             Maze_CalculateDistances_Process(grid, distances, state);
