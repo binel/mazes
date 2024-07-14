@@ -5,7 +5,7 @@ static int _maxPosition;
 
 void Maze_BinaryTree(MazeGrid *grid) {
     Maze_BinaryTree_Reset(grid);
-	bool done = false;
+    bool done = false;
     while (!done) {
         done = Maze_BinaryTree_Process(grid);
     }
@@ -33,7 +33,7 @@ bool Maze_BinaryTree_Process(MazeGrid *grid) {
         Maze_RemoveWall(grid, _position, RIGHT);
     }
     _position++;
-    
+
     return false;
 }
 
@@ -41,4 +41,3 @@ void Maze_BinaryTree_Reset(MazeGrid *grid) {
     _position = 0;
     _maxPosition = (grid->width * grid->height) - 1;
 }
-

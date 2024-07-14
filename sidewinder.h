@@ -1,7 +1,7 @@
 #ifndef maze_sidewinder_h
 #define maze_sidewinder_h
 
-#include "grid.h" 
+#include "grid.h"
 
 /*
  * Generates a maze using the sidewinder algorithm. This generates a maze in
@@ -36,7 +36,5 @@ void Maze_Sidewinder(MazeGrid *grid);
 bool Maze_Sidewinder_Process(MazeGrid *grid);
 
 void Maze_Sidewinder_Reset(MazeGrid *grid);
-
-
 
 #endif

@@ -3,9 +3,9 @@
 
 static int _position;
 static int _unvisited;
-static int _maxPosition; 
+static int _maxPosition;
 
-static bool *_visited = NULL; 
+static bool *_visited = NULL;
 
 void Maze_RandomWalk(MazeGrid *grid) {
     Maze_RandomWalk_Reset(grid);
@@ -68,17 +68,16 @@ bool Maze_RandomWalk_Process(MazeGrid *grid) {
     }
 
     _position = newPosition;
-    
+
     return false;
 }
 
 void Maze_RandomWalk_Reset(MazeGrid *grid) {
-	if (_visited != NULL) {
-		Maze_free(_visited);
-	}
+    if (_visited != NULL) {
+        Maze_free(_visited);
+    }
 
     _position = rand() % (grid->width * grid->height);
     _unvisited = (grid->width * grid->height) - 1;
-    _visited =
-        (bool *)Maze_malloc(grid->width * grid->height * sizeof(bool));
+    _visited = (bool *)Maze_malloc(grid->width * grid->height * sizeof(bool));
 }

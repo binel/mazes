@@ -4,8 +4,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#include "grid.h"
 #include "generator.h"
+#include "grid.h"
 
 /*
  * Generates a maze using the Binary Tree algorithm. This generates a maze in
@@ -42,4 +42,4 @@ bool Maze_BinaryTree_Process(MazeGrid *grid);
 
 void Maze_BinaryTree_Reset(MazeGrid *grid);
 
-#endif 
+#endif
