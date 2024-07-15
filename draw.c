@@ -49,6 +49,15 @@ void Maze_DrawGrid(MazeGrid *grid, DrawOptions *options) {
                 DrawCircle(x + half_cell_size, y + half_cell_size,
                            half_cell_size, RED);
             }
+            
+            if (position == grid->startingPosition) {
+            	DrawText("S", x + 2, y + 2, 16, WHITE);
+            }
+            
+            if (position == grid->endingPosition) {
+            	DrawText("E", x + 2, y + 2, 16, WHITE);
+            }
+            
             x += cell_size;
             position++;
         }

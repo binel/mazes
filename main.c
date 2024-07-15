@@ -95,6 +95,11 @@ static void HandleInput() {
 			
 		case TOGGLE_PLAYER_STATE:
 			grid->playerEnabled = !grid->playerEnabled;	
+			
+		case SET_GOALS_RANDOM:
+			Maze_SetStartOfMaze_Random(grid);
+			Maze_SetEndOfMaze_Random(grid);
+			grid->playerPosition = grid->startingPosition;
 					
 		case COMMAND_NONE:
 		default:

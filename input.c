@@ -71,5 +71,9 @@ enum Command Maze_GetCommand() {
 		return TOGGLE_PLAYER_STATE;
 	}
 	
+	if (IsKeyPressed(KEY_G)) {
+		return SET_GOALS_RANDOM;
+	}
+	
 	return COMMAND_NONE;
 }

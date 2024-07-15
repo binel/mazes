@@ -188,6 +188,14 @@ int Maze_MovePlayerInDirection(MazeGrid *grid, enum Direction direction) {
     return 1;
 }
 
+void Maze_SetStartOfMaze_Random(MazeGrid *grid) {
+	grid->startingPosition = rand() % (grid->width * grid->height);
+}
+
+void Maze_SetEndOfMaze_Random(MazeGrid *grid) {
+	grid->endingPosition = rand() % (grid->width * grid->height);
+}
+
 void Maze_FreeGrid(MazeGrid *grid) {
     Maze_free(grid->cells);
     Maze_free(grid);

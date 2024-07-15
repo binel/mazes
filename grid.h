@@ -41,11 +41,14 @@ typedef struct {
     int height;
     // The cell array - there are width*height cells
     MazeCell *cells;
-    // TODO split out the player stuff
     // The position is the maze that the player currently is
     int playerPosition;
     // True if the player should be drawn
     bool playerEnabled;
+    // The start of the maze 
+    int startingPosition;
+    // The end of the maze 
+    int endingPosition;
 } MazeGrid;
 
 /*
@@ -139,5 +142,9 @@ int Maze_MovePlayerInDirection(MazeGrid *grid, enum Direction direction);
  *
  */
 int Maze_RemoveWall(MazeGrid *grid, int position, enum Direction direction);
+
+void Maze_SetStartOfMaze_Random(MazeGrid *grid);
+
+void Maze_SetEndOfMaze_Random(MazeGrid *grid);
 
 #endif

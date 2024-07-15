@@ -1,8 +1,6 @@
 Bugs
 - Resizing the window causes the grid to get messed up 
-- Resizing cell size doesn't work very well 
 - coloring for grids with many small cells looks bad 
-- Fix the memory leaks 
 
 Features 
 - Implement Wilson's 
@@ -24,5 +22,6 @@ Features
 Tech Debt
 - Linting? 
 - Tests? 
-- Split out player logic from grid logic 
 - Fix bad memory use in dijkstra's 
+- Deal with out of date documentation (either update or delete) 
+- figure out how to center text in a cell 
