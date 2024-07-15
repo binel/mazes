@@ -3,6 +3,13 @@
 
 #include <stdlib.h>
 
+static int *_frontier = NULL;
+static int *_newFrontier = NULL;
+static int _frontierIndex; 
+static int _newFrontierIndex; 
+static int _distance;
+static bool _complete; 
+
 DistanceGrid *Maze_InitDistanceGrid(int width, int height) {
     DistanceGrid *grid = (DistanceGrid *)Maze_malloc(sizeof(DistanceGrid));
     grid->width = width;
@@ -37,70 +44,71 @@ DistanceGrid *Maze_CalculateDistances(MazeGrid *grid, int startingPosition) {
     DistanceGrid *distanceGrid =
         Maze_InitDistanceGrid(grid->width, grid->height);
 
-    DistanceCalculationState *state =
-        Maze_InitDistanceCalculationState(grid, startingPosition);
+    Maze_CalculateDistances_Reset(grid, startingPosition);
 
-    while (!state->complete) {
-        Maze_CalculateDistances_Process(grid, distanceGrid, state);
+    while (!_complete) {
+        Maze_CalculateDistances_Process(grid, distanceGrid);
     }
     distanceGrid->calculated = true;
     return distanceGrid;
 }
 
-DistanceCalculationState *
-Maze_InitDistanceCalculationState(MazeGrid *grid, int startingPosition) {
-    DistanceCalculationState *state = (DistanceCalculationState *)Maze_malloc(
-        sizeof(DistanceCalculationState));
-
+void Maze_CalculateDistances_Reset(MazeGrid *grid, int startingPosition) {
+	if (_frontier != NULL) {
+		Maze_free(_frontier);
+	}
+	
+	if (_newFrontier != NULL) {
+		Maze_free(_newFrontier);
+	}
+	
     // horrible - do a dynamic array later
-    state->frontier = Maze_malloc(grid->width * grid->height * sizeof(int));
-    state->newFrontier = Maze_malloc(grid->width * grid->height * sizeof(int));
+    _frontier = Maze_malloc(grid->width * grid->height * sizeof(int));
+    _newFrontier = Maze_malloc(grid->width * grid->height * sizeof(int));
     for (int i = 0; i < grid->width * grid->height; i++) {
-        state->frontier[i] = -1;
-        state->newFrontier[i] = -1;
+        _frontier[i] = -1;
+        _newFrontier[i] = -1;
     }
 
-    state->distance = 0;
-    state->frontierIndex = 0;
-    state->newFrontierIndex = -1;
-    state->frontier[0] = startingPosition;
-
-    return state;
+    _distance = 0;
+    _frontierIndex = 0;
+    _newFrontierIndex = -1;
+    _frontier[0] = startingPosition;
+    _complete = false;
 }
 
-void Maze_CalculateDistances_Process(MazeGrid *grid, DistanceGrid *distanceGrid,
-                                     DistanceCalculationState *state) {
+bool Maze_CalculateDistances_Process(MazeGrid *grid, DistanceGrid *distanceGrid) {
     // TODO some of the ugliest code I've ever written in here, must be a better
     // way
 
-    if (state->complete) {
-        return;
+    if (_complete) {
+        return true;
     }
 
     if (!distanceGrid->calculated) {
         distanceGrid->calculated = true;
     }
 
-    if (state->frontierIndex == -1) {
+    if (_frontierIndex == -1) {
         // if there is nothing in the new frontier, we are done
-        if (state->newFrontierIndex == -1) {
-            state->complete = true;
-            return;
+        if (_newFrontierIndex == -1) {
+            _complete = true;
+            return true;
         }
 
         // move newFrontier to be frontier
-        for (int i = 0; i <= state->newFrontierIndex; i++) {
-            state->frontier[i] = state->newFrontier[i];
+        for (int i = 0; i <= _newFrontierIndex; i++) {
+            _frontier[i] = _newFrontier[i];
         }
-        state->frontierIndex = state->newFrontierIndex;
-        state->newFrontierIndex = -1;
-        state->distance++;
-        distanceGrid->maxDistance = state->distance;
+        _frontierIndex = _newFrontierIndex;
+        _newFrontierIndex = -1;
+        _distance++;
+        distanceGrid->maxDistance = _distance;
     }
 
-    int position = state->frontier[state->frontierIndex];
-    distanceGrid->distances[position] = state->distance;
-    state->frontierIndex -= 1;
+    int position = _frontier[_frontierIndex];
+    distanceGrid->distances[position] = _distance;
+    _frontierIndex -= 1;
     // add connected cells to the new Frontier
 
     MazeCell cell = grid->cells[position];
@@ -111,26 +119,28 @@ void Maze_CalculateDistances_Process(MazeGrid *grid, DistanceGrid *distanceGrid,
 
     if (cell.top == OPEN && upIndex != -1 &&
         distanceGrid->distances[upIndex] == -1) {
-        state->newFrontierIndex++;
-        state->newFrontier[state->newFrontierIndex] = upIndex;
+        _newFrontierIndex++;
+        _newFrontier[_newFrontierIndex] = upIndex;
     }
 
     if (cell.bottom == OPEN && downIndex != -1 &&
         distanceGrid->distances[downIndex] == -1) {
-        state->newFrontierIndex++;
-        state->newFrontier[state->newFrontierIndex] = downIndex;
+        _newFrontierIndex++;
+        _newFrontier[_newFrontierIndex] = downIndex;
         ;
     }
 
     if (cell.left == OPEN && leftIndex != -1 &&
         distanceGrid->distances[leftIndex] == -1) {
-        state->newFrontierIndex++;
-        state->newFrontier[state->newFrontierIndex] = leftIndex;
+        _newFrontierIndex++;
+        _newFrontier[_newFrontierIndex] = leftIndex;
     }
 
     if (cell.right == OPEN && rightIndex != -1 &&
         distanceGrid->distances[rightIndex] == -1) {
-        state->newFrontierIndex++;
-        state->newFrontier[state->newFrontierIndex] = rightIndex;
+        _newFrontierIndex++;
+        _newFrontier[_newFrontierIndex] = rightIndex;
     }
+    
+    return false;
 }

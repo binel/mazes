@@ -16,7 +16,6 @@
 static MazeGrid *grid = NULL;
 static DistanceGrid *distances = NULL;
 
-static DistanceCalculationState *state = NULL;
 static bool coloringGrid = false;
 
 static void ResizeDistanceGrid(MazeGrid *grid, DistanceGrid **distances) {
@@ -81,8 +80,7 @@ static void HandleInput() {
 			
 		case COLOR_GRID:
 			coloringGrid = true;
-			state =
-				Maze_InitDistanceCalculationState(grid, grid->playerPosition);
+			Maze_CalculateDistances_Reset(grid, grid->playerPosition);
 			break;
 			
 		case COLOR_GRID_INSTANT:
@@ -110,8 +108,6 @@ int main() {
     grid = Maze_InitGrid(15, 15);
 
     distances = Maze_InitDistanceGrid(15, 15);
-    state =
-        Maze_InitDistanceCalculationState(grid, 0);
 
     int padding = 10;
     int windowHeight = 500;
@@ -144,8 +140,7 @@ int main() {
         Maze_Generate_Next_Step(grid);
 
         if (coloringGrid) {
-            Maze_CalculateDistances_Process(grid, distances, state);
-            if (state->complete) {
+            if (Maze_CalculateDistances_Process(grid, distances)) {
                 coloringGrid = false;
             }
         }

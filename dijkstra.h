@@ -21,19 +21,6 @@ typedef struct {
 } DistanceGrid;
 
 /*
- * Encapsulates the state needed while calculating a distance grid. Used to
- * handle animating the coloring of the grid
- */
-typedef struct {
-    int *frontier;
-    int *newFrontier;
-    int frontierIndex;
-    int newFrontierIndex;
-    int distance;
-    bool complete; // true if the calculation is complete
-} DistanceCalculationState;
-
-/*
  * Initializes a given distance grid for with the provided width and height
  *
  * @param width - the width of the grid in cells
@@ -72,8 +59,7 @@ DistanceGrid *Maze_CalculateDistances(MazeGrid *grid, int startingPosition);
  * @param startingPosition - the position in the grid that we should start
  * calculating distances from, this position will have distance 0.
  */
-DistanceCalculationState *
-Maze_InitDistanceCalculationState(MazeGrid *grid, int startingPosition);
+void Maze_CalculateDistances_Reset(MazeGrid *grid, int startingPosition);
 
 /*
  * Generates a binary tree maze step-by-step. Each call to this function will
@@ -84,6 +70,5 @@ Maze_InitDistanceCalculationState(MazeGrid *grid, int startingPosition);
  * @param distanceGrid - the distance grid we are creating. Modified.
  * @param state - the current state of the distance calculation process.
  */
-void Maze_CalculateDistances_Process(MazeGrid *grid, DistanceGrid *distanceGrid,
-                                     DistanceCalculationState *state);
+bool Maze_CalculateDistances_Process(MazeGrid *grid, DistanceGrid *distanceGrid);
 #endif
