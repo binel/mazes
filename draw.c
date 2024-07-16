@@ -51,11 +51,15 @@ void Maze_DrawGrid(MazeGrid *grid, DrawOptions *options) {
             }
             
             if (position == grid->startingPosition) {
-            	DrawText("S", x + 2, y + 2, 16, WHITE);
+            	int width = MeasureText("S", 16);
+            	int height = 16; 
+            	DrawText("S", x + half_cell_size - (width / 2), y + half_cell_size - (height / 2), 16, RED);
             }
             
             if (position == grid->endingPosition) {
-            	DrawText("E", x + 2, y + 2, 16, WHITE);
+            	int width = MeasureText("E", 16);
+            	int height = 16;
+            	DrawText("E", x + half_cell_size - (width / 2), y + half_cell_size - (height / 2), 16, GREEN);
             }
             
             x += cell_size;
@@ -91,7 +95,8 @@ void Maze_ColorMaze(MazeGrid *grid, DistanceGrid *distanceGrid,
 
             // this should be a draw options
             char str[4];
-            sprintf(str, "%3d", distanceGrid->distances[position]);
+            sprintf(str, "%d", distanceGrid->distances[position]);
+            // snuggled up in top left corner 
             DrawText(str, x + 2, y + 2, 8, WHITE);
 
             x += cell_size;
