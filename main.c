@@ -79,12 +79,11 @@ static void HandleInput() {
 			break;
 			
 		case COLOR_GRID:
-			coloringGrid = true;
-			Maze_CalculateDistances_Reset(grid, grid->playerPosition);
+			Maze_Color_SetColoring(grid);
 			break;
 			
 		case COLOR_GRID_INSTANT:
-			distances = Maze_CalculateDistances(grid, grid->playerPosition);
+			Maze_Color_Now(grid, distances);
 			break;
 		
 			
@@ -143,12 +142,7 @@ int main() {
 		HandleInput();
 		
         Maze_Generate_Next_Step(grid);
-
-        if (coloringGrid) {
-            if (Maze_CalculateDistances_Process(grid, distances)) {
-                coloringGrid = false;
-            }
-        }
+        Maze_Color_Next_Step(grid, distances);
 
         BeginDrawing();
         ClearBackground(BLACK);

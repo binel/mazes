@@ -40,17 +40,13 @@ void Maze_ResetDistanceGrid(DistanceGrid *grid) {
     }
 }
 
-DistanceGrid *Maze_CalculateDistances(MazeGrid *grid, int startingPosition) {
-    DistanceGrid *distanceGrid =
-        Maze_InitDistanceGrid(grid->width, grid->height);
-
+void Maze_CalculateDistances(MazeGrid *grid, int startingPosition, DistanceGrid *distanceGrid) {
     Maze_CalculateDistances_Reset(grid, startingPosition);
 
     while (!_complete) {
         Maze_CalculateDistances_Process(grid, distanceGrid);
     }
     distanceGrid->calculated = true;
-    return distanceGrid;
 }
 
 void Maze_CalculateDistances_Reset(MazeGrid *grid, int startingPosition) {

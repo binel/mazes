@@ -49,7 +49,7 @@ void Maze_ResetDistanceGrid(DistanceGrid *grid);
  * from. in the resulting distance grid, this position will have distance 0.
  *
  */
-DistanceGrid *Maze_CalculateDistances(MazeGrid *grid, int startingPosition);
+void Maze_CalculateDistances(MazeGrid *grid, int startingPosition, DistanceGrid *distanceGrid);
 
 /*
  * Initializes a DistanceCalculationState so it is ready to be used by
