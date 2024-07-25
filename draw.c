@@ -11,6 +11,9 @@ void Maze_DrawGrid(MazeGrid *grid, DrawOptions *options) {
     int half_cell_size = (int)((double)cell_size / 2.0);
     int x = options->xstart;
     int y = options->ystart;
+    int x_midpoint = options->xstart + (options->width / 2);
+    int y_midpoint = options->ystart + (options->height / 2);
+
     int position = 0;
     Vector2 start;
     Vector2 end;
@@ -67,6 +70,10 @@ void Maze_DrawGrid(MazeGrid *grid, DrawOptions *options) {
         }
         x = options->xstart;
         y += cell_size;
+    }
+
+    if (grid->won) {
+        DrawText("You Win!", x_midpoint - (MeasureText("You Win!", 64) / 2) , y_midpoint - 32, 64, WHITE);
     }
 }
 

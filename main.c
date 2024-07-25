@@ -11,8 +11,6 @@
 #include "command.h"
 #include "input.h"
 
-
-
 static MazeGrid *grid = NULL;
 static DistanceGrid *distances = NULL;
 
@@ -143,6 +141,8 @@ int main() {
 		
         Maze_Generate_Next_Step(grid);
         Maze_Color_Next_Step(grid, distances);
+
+        Maze_SetIfWon(grid);
 
         BeginDrawing();
         ClearBackground(BLACK);

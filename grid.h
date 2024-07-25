@@ -49,6 +49,8 @@ typedef struct {
     int startingPosition;
     // The end of the maze 
     int endingPosition;
+    // True if the maze has been won 
+    bool won; 
 } MazeGrid;
 
 /*
@@ -146,5 +148,10 @@ int Maze_RemoveWall(MazeGrid *grid, int position, enum Direction direction);
 void Maze_SetStartOfMaze_Random(MazeGrid *grid);
 
 void Maze_SetEndOfMaze_Random(MazeGrid *grid);
+
+/*
+ * Returns true if the player has reached the ending position 
+ */
+void Maze_SetIfWon(MazeGrid *grid);
 
 #endif

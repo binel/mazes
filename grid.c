@@ -200,3 +200,7 @@ void Maze_FreeGrid(MazeGrid *grid) {
     Maze_free(grid->cells);
     Maze_free(grid);
 }
+
+void Maze_SetIfWon(MazeGrid *grid) {
+    grid->won = grid->playerPosition == grid->endingPosition;
+}
