@@ -11,6 +11,10 @@
 #include "command.h"
 #include "input.h"
 
+// When true it will actually play like a game. 
+// False and it's developer mode
+static bool EnableGameMode = true;
+
 static MazeGrid *grid = NULL;
 static DistanceGrid *distances = NULL;
 
@@ -23,7 +27,27 @@ static void ResizeDistanceGrid(MazeGrid *grid, DistanceGrid **distances) {
 
 static void HandleInput() {
 	enum Command command = Maze_GetCommand();
-	
+
+    // Not all commands are supported in game mode 
+    if (EnableGameMode) {
+        switch (command) {
+            case MOVE_PLAYER_UP:
+                Maze_MovePlayerInDirection(grid, UP);
+                break;
+            case MOVE_PLAYER_DOWN:
+                Maze_MovePlayerInDirection(grid, DOWN);
+                break;
+            case MOVE_PLAYER_LEFT:
+                Maze_MovePlayerInDirection(grid, LEFT);
+                break;
+            case MOVE_PLAYER_RIGHT:
+                Maze_MovePlayerInDirection(grid, RIGHT);
+                break;
+        }
+
+        return;
+    }
+
 	switch (command) {
 		case MOVE_PLAYER_UP:
 			Maze_MovePlayerInDirection(grid, UP);
@@ -127,6 +151,15 @@ int main() {
     options.width = windowWidth;
 
     coloringGrid = false;
+
+    // If we are in game mode, generate a binary maze, set the 
+    // goals, and let the player play. 
+    if (EnableGameMode) {
+        Maze_Generate_Now(grid, BINARY_TREE);
+        Maze_SetStartOfMaze_Random(grid);
+        Maze_SetEndOfMaze_Random(grid);
+        grid->playerPosition = grid->startingPosition;
+    }
 
     while (!WindowShouldClose()) {
 
