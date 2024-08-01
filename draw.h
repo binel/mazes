@@ -12,6 +12,7 @@
 
 #include "dijkstra.h"
 #include "grid.h"
+#include "ui.h" 
 
 /*
  * Configuration options for drawing the grid
@@ -41,5 +42,7 @@ void Maze_DrawGrid(MazeGrid *grid, DrawOptions *options);
  */
 void Maze_ColorMaze(MazeGrid *grid, DistanceGrid *distanceGrid,
                     DrawOptions *options);
+
+void Maze_DrawButton(Button button);
 
 #endif

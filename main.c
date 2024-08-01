@@ -10,6 +10,7 @@
 #include "memory.h"
 #include "command.h"
 #include "input.h"
+#include "ui.h"
 
 // When true it will actually play like a game. 
 // False and it's developer mode
@@ -161,6 +162,12 @@ int main() {
         grid->playerPosition = grid->startingPosition;
     }
 
+    Button testButton;
+    testButton.xStart = 100;
+    testButton.yStart = 100;
+    testButton.width = 200;
+    testButton.height = 100;
+
     while (!WindowShouldClose()) {
 
         if (IsWindowResized()) {
@@ -182,6 +189,10 @@ int main() {
 
         Maze_ColorMaze(grid, distances, &options);
         Maze_DrawGrid(grid, &options);
+
+        if (grid->won){
+            Maze_DrawButton(testButton);
+        }
 
         EndDrawing();
     }

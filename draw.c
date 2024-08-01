@@ -113,3 +113,10 @@ void Maze_ColorMaze(MazeGrid *grid, DistanceGrid *distanceGrid,
         y += cell_size;
     }
 }
+
+void Maze_DrawButton(Button button) {
+    // border 
+    DrawRectangle(button.xStart, button.yStart, button.width, button.height, WHITE);
+    // background 
+    DrawRectangle(button.xStart + 5, button.yStart + 5, button.width - 10, button.height - 10, RED);
+}
