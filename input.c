@@ -7,7 +7,7 @@ enum Command Maze_GetCommand() {
 		return INCREASE_MAZE_HEIGHT;
 	}
 	
-	if (IsKeyPressed(KEY_UP)) {
+	if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) {
 		return MOVE_PLAYER_UP;
 	}
 
@@ -15,14 +15,14 @@ enum Command Maze_GetCommand() {
 		return DECREASE_MAZE_HEIGHT;
 	}
 	
-	if (IsKeyPressed(KEY_DOWN)) {
+	if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) {
 		return MOVE_PLAYER_DOWN;
 	}
 
 	if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_RIGHT)) {
 		return INCREASE_MAZE_WIDTH;
 	}
-	if (IsKeyPressed(KEY_RIGHT)) {
+	if (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) {
 		return MOVE_PLAYER_RIGHT;
 	}
 
@@ -30,7 +30,7 @@ enum Command Maze_GetCommand() {
 		return DECREASE_MAZE_WIDTH;
 	}
 	
-	if (IsKeyPressed(KEY_LEFT)) {
+	if (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A)) {
 		return MOVE_PLAYER_LEFT;
 	}
 
@@ -46,10 +46,10 @@ enum Command Maze_GetCommand() {
 		return GENERATE_BINARY_TREE_INSTANT;
 	}
 
-	if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_S)) {
+	if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_I)) {
 		return GENERATE_SIDEWINDER;
 	}
-	if (IsKeyPressed(KEY_S)) {
+	if (IsKeyPressed(KEY_I)) {
 		return GENERATE_SIDEWINDER_INSTANT;
 	}
 
