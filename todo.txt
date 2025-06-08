@@ -20,6 +20,8 @@ Features
 
 
 Tech Debt
+- Usage documentation 
+	- Controls 
 - Linting? 
 - Tests? 
 - Fix bad memory use in dijkstra's 
