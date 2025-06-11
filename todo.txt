@@ -1,4 +1,5 @@
 Bugs
+- developer mode is broken - when you first load it up it shows the "you win" message
 - Resizing the window causes the grid to get messed up 
 - coloring for grids with many small cells looks bad 
 
@@ -20,10 +21,9 @@ Features
 
 
 Tech Debt
-- Usage documentation 
-	- Controls 
 - Linting? 
 - Tests? 
 - Fix bad memory use in dijkstra's 
 - Deal with out of date documentation (either update or delete) 
 - figure out how to center text in a cell 
+- In input.h "instant" vs "non-instant" commands are mixed up 

@@ -14,7 +14,7 @@
 
 // When true it will actually play like a game. 
 // False and it's developer mode
-static bool EnableGameMode = true;
+static bool EnableGameMode = false;
 
 static MazeGrid *grid = NULL;
 static DistanceGrid *distances = NULL;
